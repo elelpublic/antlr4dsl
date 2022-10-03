@@ -27,3 +27,4 @@ target
 tools
 .idea
 lib
+.DS_Store

@@ -1,0 +1,13 @@
+<ivy-module version="2.0">
+
+    <info organisation="com.infodesire"
+          module="groovydsl"/>
+
+    <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
+        <dependency org="org.antlr" name="antlr4" rev="4.11.1"/>
+
+    </dependencies>
+
+</ivy-module>

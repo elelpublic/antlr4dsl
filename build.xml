@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project default="usage" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <target name="properties">
+
+        <property name="target.dir" value="target" />
+        <property file="project.properties" />
+
+    </target>
+
+    <target name="setup" depends="properties" >
+
+        <!-- ivy (dependency manager) -->
+        <!-- to (re)install ivy: cd ivy; ./install-ivy.sh -->
+        <path id="ivy.lib.path">
+            <fileset dir="tools/ivy" includes="*.jar"/>
+        </path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+
+        <!-- build stuff -->
+        <mkdir dir="${target.dir}" />
+
+    </target>
+
+    <target name="clean" depends="setup">
+        <delete dir="${target.dir}" />
+    </target>
+
+    <target name="fetchlibs" depends="setup">
+        <ivy:retrieve />
+    </target>
+
+    <target name="compile" depends="fetchlibs">
+        <mkdir dir="${target.dir}/classes" />
+        <groovyc
+                srcdir="src/main/groovy"
+                destdir="${target.dir}/classes"
+        >
+        </groovyc>
+    </target>
+
+    <target name="tools.install" depends="properties">
+        <mkdir dir="tools/antlr" />
+        <get
+                src="https://www.antlr.org/download/antlr-${antlr.version}-complete.jar"
+                dest="tools/antlr"
+                usetimestamp="true"
+                skipexisting="true"
+        />
+        <mkdir dir="tools/ivy" />
+        <get
+                src="https://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.version}/ivy-${ivy.version}.jar"
+                dest="tools/ivy"
+                usetimestamp="true"
+                skipexisting="true"
+        />
+    </target>
+
+    <target name="antlr.options" depends="tools.install">
+        <java
+            fork="true"
+            jar="tools/antlr/antlr-${antlr.version}-complete.jar"
+        />
+    </target>
+
+    <target name="help" depends="usage" />
+
+    <target name="usage">
+        <echo>
+Proof of concept for a ANTLR4 based scripting DSL
+
+ant tools.install ............. Install tools: ivy, antlr
+ant antlr.options ............. Show all antlr command line options
+
+Before first compile, install ivy:
+cd ivy; ./install-ivy.sh
+        </echo>
+    </target>
+
+</project>

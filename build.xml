@@ -41,6 +41,7 @@
         >
             <src path="src/main/java" />
             <src path="src/main/antlr4" />
+            <src path="src/test/java" />
             <classpath>
                 <pathelement location="lib/antlr4-runtime-${antlr.version}.jar" />
             </classpath>
@@ -82,6 +83,54 @@
         />
     </target>
 
+    <target name="test" depends="test.run">
+        <fail if="failures" ></fail>
+    </target>
+
+
+    <target name="test.run" depends="compile">
+
+        <!-- default fallback: test all -->
+        <property name="test.include" value="**/*Test.class" />
+
+        <mkdir dir="target/test-generated-files" />
+        <junit
+                fork="true"
+                printsummary="on"
+        >
+            <!-- fork:true is necessary, because some tests use ant themselves -->
+
+            <classpath>
+                <fileset dir="lib" />
+                <pathelement location="target/classes" />
+            </classpath>
+
+            <batchtest
+                    failureproperty="failures"
+                    errorproperty="failures"
+                    todir="target/test-generated-files"
+            >
+
+                <fileset dir="target/classes" >
+                    <include name="${test.include}" />
+                </fileset>
+
+            </batchtest>
+
+            <formatter type="xml" />
+
+        </junit>
+
+        <mkdir dir="target/test-report" />
+        <junitreport todir="target/test-report">
+            <fileset dir="target/test-generated-files">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="noframes" todir="target/test-report/report"/>
+        </junitreport>
+
+    </target>
+
     <target name="clean">
         <delete dir="target" />
         <delete>
@@ -107,6 +156,7 @@ ant antlr.options ............. Show all antlr command line options
 ant antlr.generate ............ Generate compiler code from grammar using antlr
 ant clean ..................... Delete generated files
 ant clean.all ................. Delete all generated or downloaded files
+ant test ...................... Run unit tests
 ant hello ..................... Compile and run the hello world program
 
         </echo>

@@ -8,6 +8,12 @@
         <!-- https://mvnrepository.com/artifact/org.antlr/antlr4 -->
         <dependency org="org.antlr" name="antlr4" rev="4.11.1"/>
 
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency org="junit" name="junit" rev="4.13.2"/>
+
+        <!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest -->
+        <dependency org="org.hamcrest" name="hamcrest" rev="2.2"/>
+
     </dependencies>
 
 </ivy-module>

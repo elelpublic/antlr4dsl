@@ -29,6 +29,7 @@
                 jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
             <arg value="src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/Expr.g4" />
             <arg line="-package com.infodesire.poc.antlr4dsl.parser" />
+            <arg value="-visitor" />
         </java>
     </target>
 
@@ -50,7 +51,11 @@
         <java
                 classpath="target/classes"
                 classname="com.infodesire.poc.antlr4dsl.Main"
-        />
+        >
+            <classpath>
+                <pathelement location="lib/antlr4-runtime-${antlr.version}.jar" />
+            </classpath>
+        </java>
     </target>
 
     <target name="tools.install" depends="properties">

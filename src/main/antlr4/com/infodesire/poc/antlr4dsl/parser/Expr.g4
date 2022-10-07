@@ -5,5 +5,6 @@ expr:	expr ('*'|'/') expr
     |	INT
     |	'(' expr ')'
     ;
-NEWLINE : [\r\n]+ -> skip;
-INT     : [0-9]+ ;
+NEWLINE         : [\r\n]+ -> skip;
+INT             : [0-9]+ ;
+WHITESPACE      : [ \t]+ -> skip;

@@ -19,18 +19,38 @@
 
     </target>
 
+    <target name="setup.groovy" depends="fetchlibs, properties">
+        <path id="groovy.lib.path">
+            <fileset dir="lib" includes="groovy-${groovy.version}.jar"/>
+        </path>
+        <taskdef name="groovy"
+                 classname="org.codehaus.groovy.ant.Groovy"
+                 classpathref="groovy.lib.path"
+        />
+    </target>
+
     <target name="fetchlibs" depends="tools.install, setup.ivy">
         <ivy:retrieve />
     </target>
 
     <target name="antlr.generate" depends="tools.install">
+
         <java
                 fork="true"
                 jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
-            <arg value="src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/Expr.g4" />
+            <arg value="src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/BSMLLexer.g4" />
             <arg line="-package com.infodesire.poc.antlr4dsl.parser" />
             <arg value="-visitor" />
         </java>
+
+        <java
+                fork="true"
+                jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
+                <arg value="src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/BSMLParser.g4" />
+            <arg line="-package com.infodesire.poc.antlr4dsl.parser" />
+            <arg value="-visitor" />
+        </java>
+
     </target>
 
     <target name="compile" depends="fetchlibs, antlr.generate">
@@ -88,7 +108,7 @@
     </target>
 
 
-    <target name="test.run" depends="compile">
+    <target name="test.run" depends="compile, setup.groovy">
 
         <!-- default fallback: test all -->
         <property name="test.include" value="**/*Test.class" />
@@ -128,6 +148,20 @@
             </fileset>
             <report format="noframes" todir="target/test-report/report"/>
         </junitreport>
+
+        <groovy>
+            import java.awt.Desktop;
+            if (Desktop.isDesktopSupported()) {
+                try {
+                    Desktop desktop = Desktop.getDesktop();
+                    File myFile = new File("target/test-report/report/junit-noframes.html");
+                    desktop.open(myFile);
+                }
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        </groovy>
 
     </target>
 

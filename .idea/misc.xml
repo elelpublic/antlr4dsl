@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ANTLRGenerationPreferences">
+    <option name="perGrammarGenerationSettings">
+      <list>
+        <PerGrammarGenerationSettings>
+          <option name="fileName" value="$PROJECT_DIR$/src/main/antlr4/Expr.g4" />
+          <option name="autoGen" value="true" />
+          <option name="outputDir" value="" />
+          <option name="libDir" value="" />
+          <option name="encoding" value="" />
+          <option name="pkg" value="" />
+          <option name="language" value="" />
+          <option name="generateVisitor" value="true" />
+        </PerGrammarGenerationSettings>
+        <PerGrammarGenerationSettings>
+          <option name="fileName" value="$PROJECT_DIR$/src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/Expr.g4" />
+          <option name="autoGen" value="true" />
+          <option name="outputDir" value="src/main/antlr4" />
+          <option name="libDir" value="src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/" />
+          <option name="encoding" value="" />
+          <option name="pkg" value="com.infodesire.poc.antlr4dsl.parser" />
+          <option name="language" value="" />
+          <option name="generateVisitor" value="true" />
+        </PerGrammarGenerationSettings>
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://out" />
+  </component>
+</project>

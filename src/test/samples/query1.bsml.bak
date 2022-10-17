@@ -1,0 +1,18 @@
+query {
+
+    name All active customers
+    language System
+    type Customer
+
+    where {
+
+        Category = Customer
+        AND
+        Blocked = false
+
+    }
+
+
+}
+
+

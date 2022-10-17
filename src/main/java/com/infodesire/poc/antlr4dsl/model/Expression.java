@@ -1,6 +1,6 @@
 package com.infodesire.poc.antlr4dsl.model;
 
-public class Expression {
+public class Expression implements BsmlElement {
 
   public static enum Type { NUMBER, BINARY }
 

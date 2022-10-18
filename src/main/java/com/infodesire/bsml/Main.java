@@ -1,4 +1,4 @@
-package com.infodesire.poc.antlr4dsl;
+package com.infodesire.bsml;
 
 import java.io.IOException;
 

@@ -1,5 +1,5 @@
 // Generated from java-escape by ANTLR 4.11.1
-package com.infodesire.poc.antlr4dsl.parser;
+package com.infodesire.bsml.parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -16,6 +16,12 @@ public interface BSMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProg(BSMLParser.ProgContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BSMLParser#query}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQuery(BSMLParser.QueryContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BSMLParser#lines}.
 	 * @param ctx the parse tree

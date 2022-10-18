@@ -1,4 +1,4 @@
-package com.infodesire.poc.antlr4dsl;
+package com.infodesire.bsml;
 
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.tree.ParseTree;

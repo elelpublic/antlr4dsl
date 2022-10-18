@@ -1,4 +1,4 @@
-package com.infodesire.poc.antlr4dsl.model;
+package com.infodesire.bsml.model;
 
 public class Query implements BsmlElement {
 

@@ -3,6 +3,18 @@ lexer grammar BSMLLexer;
 
 // LEXER ---------------------------------------------
 
+QUERY
+    : 'query'
+    ;
+
+OPEN
+    : '{'
+    ;
+
+CLOSE
+    : '}'
+    ;
+
 IDENTIFIER
     : [a-zA-Z][a-zA-Z0-9]*
     ;
@@ -16,7 +28,7 @@ WHITESPACE
     ;
 
 NEWLINE
-    : [\r\n]
+    : [\r\n] -> skip
     ;
 
 

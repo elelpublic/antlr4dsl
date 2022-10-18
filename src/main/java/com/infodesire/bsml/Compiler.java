@@ -1,8 +1,9 @@
-package com.infodesire.poc.antlr4dsl;
+package com.infodesire.bsml;
 
-import com.infodesire.poc.antlr4dsl.model.BsmlElement;
-import com.infodesire.poc.antlr4dsl.parser.BSMLLexer;
-import com.infodesire.poc.antlr4dsl.parser.BSMLParser;
+import com.infodesire.bsml.model.BsmlElement;
+import com.infodesire.bsml.model.Query;
+import com.infodesire.bsml.parser.BSMLLexer;
+import com.infodesire.bsml.parser.BSMLParser;
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStream;
@@ -29,12 +30,20 @@ public class Compiler {
       return visit( node.getChild( 0 ), parser );
     }
 
-    if( node instanceof BSMLParser.LinesContext ) {
+    if( node instanceof com.infodesire.bsml.parser.BSMLParser.LinesContext ) {
       return visitLines( ( BSMLParser.LinesContext ) node, parser );
+    }
+
+    if( node instanceof BSMLParser.QueryContext ) {
+      return visitQuery( (BSMLParser.QueryContext) node );
     }
 
     throw new BsmlVersionException( node, parser );
 
+  }
+
+  private BsmlElement visitQuery( BSMLParser.QueryContext node ) {
+    return new Query();
   }
 
   private BsmlElement visitLines( BSMLParser.LinesContext lines, Parser parser ) {

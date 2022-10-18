@@ -1,5 +1,5 @@
 // Generated from java-escape by ANTLR 4.11.1
-package com.infodesire.poc.antlr4dsl.parser;
+package com.infodesire.bsml.parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -17,25 +17,28 @@ public class BSMLParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		IDENTIFIER=1, COLON=2, WHITESPACE=3, NEWLINE=4, VALUE=5, EOL=6;
+		QUERY=1, OPEN=2, CLOSE=3, IDENTIFIER=4, COLON=5, WHITESPACE=6, NEWLINE=7, 
+		VALUE=8, EOL=9;
 	public static final int
-		RULE_prog = 0, RULE_lines = 1, RULE_line = 2, RULE_name = 3, RULE_value = 4;
+		RULE_prog = 0, RULE_query = 1, RULE_lines = 2, RULE_line = 3, RULE_name = 4, 
+		RULE_value = 5;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"prog", "lines", "line", "name", "value"
+			"prog", "query", "lines", "line", "name", "value"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, null, "':'"
+			null, "'query'", "'{'", "'}'", null, "':'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "IDENTIFIER", "COLON", "WHITESPACE", "NEWLINE", "VALUE", "EOL"
+			null, "QUERY", "OPEN", "CLOSE", "IDENTIFIER", "COLON", "WHITESPACE", 
+			"NEWLINE", "VALUE", "EOL"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -95,6 +98,9 @@ public class BSMLParser extends Parser {
 		public LinesContext lines() {
 			return getRuleContext(LinesContext.class,0);
 		}
+		public QueryContext query() {
+			return getRuleContext(QueryContext.class,0);
+		}
 		public ProgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -118,13 +124,13 @@ public class BSMLParser extends Parser {
 		ProgContext _localctx = new ProgContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_prog);
 		try {
-			setState(14);
+			setState(19);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case EOF:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(10);
+				setState(12);
 				match(EOF);
 				}
 				break;
@@ -133,14 +139,72 @@ public class BSMLParser extends Parser {
 			case NEWLINE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(11);
+				setState(13);
 				lines(0);
-				setState(12);
+				setState(14);
+				match(EOF);
+				}
+				break;
+			case QUERY:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(16);
+				query();
+				setState(17);
 				match(EOF);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class QueryContext extends ParserRuleContext {
+		public TerminalNode QUERY() { return getToken(BSMLParser.QUERY, 0); }
+		public TerminalNode OPEN() { return getToken(BSMLParser.OPEN, 0); }
+		public TerminalNode CLOSE() { return getToken(BSMLParser.CLOSE, 0); }
+		public QueryContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_query; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterQuery(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitQuery(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitQuery(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final QueryContext query() throws RecognitionException {
+		QueryContext _localctx = new QueryContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_query);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(21);
+			match(QUERY);
+			setState(22);
+			match(OPEN);
+			setState(23);
+			match(CLOSE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -190,18 +254,18 @@ public class BSMLParser extends Parser {
 		int _parentState = getState();
 		LinesContext _localctx = new LinesContext(_ctx, _parentState);
 		LinesContext _prevctx = _localctx;
-		int _startState = 2;
-		enterRecursionRule(_localctx, 2, RULE_lines, _p);
+		int _startState = 4;
+		enterRecursionRule(_localctx, 4, RULE_lines, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(17);
+			setState(26);
 			line();
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(23);
+			setState(32);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -212,14 +276,14 @@ public class BSMLParser extends Parser {
 					{
 					_localctx = new LinesContext(_parentctx, _parentState);
 					pushNewRecursionContext(_localctx, _startState, RULE_lines);
-					setState(19);
+					setState(28);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-					setState(20);
+					setState(29);
 					line();
 					}
 					} 
 				}
-				setState(25);
+				setState(34);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,1,_ctx);
 			}
@@ -272,57 +336,57 @@ public class BSMLParser extends Parser {
 
 	public final LineContext line() throws RecognitionException {
 		LineContext _localctx = new LineContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_line);
+		enterRule(_localctx, 6, RULE_line);
 		int _la;
 		try {
-			setState(42);
+			setState(51);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(26);
+				setState(35);
 				name();
-				setState(27);
+				setState(36);
 				match(EOL);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(29);
+				setState(38);
 				name();
-				setState(30);
+				setState(39);
 				match(EOF);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(32);
+				setState(41);
 				name();
-				setState(33);
+				setState(42);
 				value();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(38);
+				setState(47);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==WHITESPACE) {
 					{
 					{
-					setState(35);
+					setState(44);
 					match(WHITESPACE);
 					}
 					}
-					setState(40);
+					setState(49);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(41);
+				setState(50);
 				match(NEWLINE);
 				}
 				break;
@@ -368,28 +432,28 @@ public class BSMLParser extends Parser {
 
 	public final NameContext name() throws RecognitionException {
 		NameContext _localctx = new NameContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_name);
+		enterRule(_localctx, 8, RULE_name);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(44);
+			setState(53);
 			match(IDENTIFIER);
-			setState(48);
+			setState(57);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(45);
+				setState(54);
 				match(WHITESPACE);
 				}
 				}
-				setState(50);
+				setState(59);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(51);
+			setState(60);
 			match(COLON);
 			}
 		}
@@ -430,26 +494,26 @@ public class BSMLParser extends Parser {
 
 	public final ValueContext value() throws RecognitionException {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_value);
+		enterRule(_localctx, 10, RULE_value);
 		try {
-			setState(57);
+			setState(66);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(53);
+				setState(62);
 				match(VALUE);
-				setState(54);
+				setState(63);
 				match(EOL);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(55);
+				setState(64);
 				match(VALUE);
-				setState(56);
+				setState(65);
 				match(EOF);
 				}
 				break;
@@ -468,7 +532,7 @@ public class BSMLParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 1:
+		case 2:
 			return lines_sempred((LinesContext)_localctx, predIndex);
 		}
 		return true;
@@ -482,44 +546,48 @@ public class BSMLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0006<\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
-		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0003\u0000\u000f\b\u0000\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0005\u0001\u0016"+
-		"\b\u0001\n\u0001\f\u0001\u0019\t\u0001\u0001\u0002\u0001\u0002\u0001\u0002"+
-		"\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002"+
-		"\u0001\u0002\u0005\u0002%\b\u0002\n\u0002\f\u0002(\t\u0002\u0001\u0002"+
-		"\u0003\u0002+\b\u0002\u0001\u0003\u0001\u0003\u0005\u0003/\b\u0003\n\u0003"+
-		"\f\u00032\t\u0003\u0001\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001"+
-		"\u0004\u0001\u0004\u0003\u0004:\b\u0004\u0001\u0004\u0000\u0001\u0002"+
-		"\u0005\u0000\u0002\u0004\u0006\b\u0000\u0000>\u0000\u000e\u0001\u0000"+
-		"\u0000\u0000\u0002\u0010\u0001\u0000\u0000\u0000\u0004*\u0001\u0000\u0000"+
-		"\u0000\u0006,\u0001\u0000\u0000\u0000\b9\u0001\u0000\u0000\u0000\n\u000f"+
-		"\u0005\u0000\u0000\u0001\u000b\f\u0003\u0002\u0001\u0000\f\r\u0005\u0000"+
-		"\u0000\u0001\r\u000f\u0001\u0000\u0000\u0000\u000e\n\u0001\u0000\u0000"+
-		"\u0000\u000e\u000b\u0001\u0000\u0000\u0000\u000f\u0001\u0001\u0000\u0000"+
-		"\u0000\u0010\u0011\u0006\u0001\uffff\uffff\u0000\u0011\u0012\u0003\u0004"+
-		"\u0002\u0000\u0012\u0017\u0001\u0000\u0000\u0000\u0013\u0014\n\u0001\u0000"+
-		"\u0000\u0014\u0016\u0003\u0004\u0002\u0000\u0015\u0013\u0001\u0000\u0000"+
-		"\u0000\u0016\u0019\u0001\u0000\u0000\u0000\u0017\u0015\u0001\u0000\u0000"+
-		"\u0000\u0017\u0018\u0001\u0000\u0000\u0000\u0018\u0003\u0001\u0000\u0000"+
-		"\u0000\u0019\u0017\u0001\u0000\u0000\u0000\u001a\u001b\u0003\u0006\u0003"+
-		"\u0000\u001b\u001c\u0005\u0006\u0000\u0000\u001c+\u0001\u0000\u0000\u0000"+
-		"\u001d\u001e\u0003\u0006\u0003\u0000\u001e\u001f\u0005\u0000\u0000\u0001"+
-		"\u001f+\u0001\u0000\u0000\u0000 !\u0003\u0006\u0003\u0000!\"\u0003\b\u0004"+
-		"\u0000\"+\u0001\u0000\u0000\u0000#%\u0005\u0003\u0000\u0000$#\u0001\u0000"+
-		"\u0000\u0000%(\u0001\u0000\u0000\u0000&$\u0001\u0000\u0000\u0000&\'\u0001"+
-		"\u0000\u0000\u0000\')\u0001\u0000\u0000\u0000(&\u0001\u0000\u0000\u0000"+
-		")+\u0005\u0004\u0000\u0000*\u001a\u0001\u0000\u0000\u0000*\u001d\u0001"+
-		"\u0000\u0000\u0000* \u0001\u0000\u0000\u0000*&\u0001\u0000\u0000\u0000"+
-		"+\u0005\u0001\u0000\u0000\u0000,0\u0005\u0001\u0000\u0000-/\u0005\u0003"+
-		"\u0000\u0000.-\u0001\u0000\u0000\u0000/2\u0001\u0000\u0000\u00000.\u0001"+
-		"\u0000\u0000\u000001\u0001\u0000\u0000\u000013\u0001\u0000\u0000\u0000"+
-		"20\u0001\u0000\u0000\u000034\u0005\u0002\u0000\u00004\u0007\u0001\u0000"+
-		"\u0000\u000056\u0005\u0005\u0000\u00006:\u0005\u0006\u0000\u000078\u0005"+
-		"\u0005\u0000\u00008:\u0005\u0000\u0000\u000195\u0001\u0000\u0000\u0000"+
-		"97\u0001\u0000\u0000\u0000:\t\u0001\u0000\u0000\u0000\u0006\u000e\u0017"+
-		"&*09";
+		"\u0004\u0001\tE\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
+		"\u0005\u0007\u0005\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001"+
+		"\u0000\u0001\u0000\u0001\u0000\u0003\u0000\u0014\b\u0000\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0001"+
+		"\u0002\u0001\u0002\u0005\u0002\u001f\b\u0002\n\u0002\f\u0002\"\t\u0002"+
+		"\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003"+
+		"\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0005\u0003.\b\u0003"+
+		"\n\u0003\f\u00031\t\u0003\u0001\u0003\u0003\u00034\b\u0003\u0001\u0004"+
+		"\u0001\u0004\u0005\u00048\b\u0004\n\u0004\f\u0004;\t\u0004\u0001\u0004"+
+		"\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0003\u0005"+
+		"C\b\u0005\u0001\u0005\u0000\u0001\u0004\u0006\u0000\u0002\u0004\u0006"+
+		"\b\n\u0000\u0000G\u0000\u0013\u0001\u0000\u0000\u0000\u0002\u0015\u0001"+
+		"\u0000\u0000\u0000\u0004\u0019\u0001\u0000\u0000\u0000\u00063\u0001\u0000"+
+		"\u0000\u0000\b5\u0001\u0000\u0000\u0000\nB\u0001\u0000\u0000\u0000\f\u0014"+
+		"\u0005\u0000\u0000\u0001\r\u000e\u0003\u0004\u0002\u0000\u000e\u000f\u0005"+
+		"\u0000\u0000\u0001\u000f\u0014\u0001\u0000\u0000\u0000\u0010\u0011\u0003"+
+		"\u0002\u0001\u0000\u0011\u0012\u0005\u0000\u0000\u0001\u0012\u0014\u0001"+
+		"\u0000\u0000\u0000\u0013\f\u0001\u0000\u0000\u0000\u0013\r\u0001\u0000"+
+		"\u0000\u0000\u0013\u0010\u0001\u0000\u0000\u0000\u0014\u0001\u0001\u0000"+
+		"\u0000\u0000\u0015\u0016\u0005\u0001\u0000\u0000\u0016\u0017\u0005\u0002"+
+		"\u0000\u0000\u0017\u0018\u0005\u0003\u0000\u0000\u0018\u0003\u0001\u0000"+
+		"\u0000\u0000\u0019\u001a\u0006\u0002\uffff\uffff\u0000\u001a\u001b\u0003"+
+		"\u0006\u0003\u0000\u001b \u0001\u0000\u0000\u0000\u001c\u001d\n\u0001"+
+		"\u0000\u0000\u001d\u001f\u0003\u0006\u0003\u0000\u001e\u001c\u0001\u0000"+
+		"\u0000\u0000\u001f\"\u0001\u0000\u0000\u0000 \u001e\u0001\u0000\u0000"+
+		"\u0000 !\u0001\u0000\u0000\u0000!\u0005\u0001\u0000\u0000\u0000\" \u0001"+
+		"\u0000\u0000\u0000#$\u0003\b\u0004\u0000$%\u0005\t\u0000\u0000%4\u0001"+
+		"\u0000\u0000\u0000&\'\u0003\b\u0004\u0000\'(\u0005\u0000\u0000\u0001("+
+		"4\u0001\u0000\u0000\u0000)*\u0003\b\u0004\u0000*+\u0003\n\u0005\u0000"+
+		"+4\u0001\u0000\u0000\u0000,.\u0005\u0006\u0000\u0000-,\u0001\u0000\u0000"+
+		"\u0000.1\u0001\u0000\u0000\u0000/-\u0001\u0000\u0000\u0000/0\u0001\u0000"+
+		"\u0000\u000002\u0001\u0000\u0000\u00001/\u0001\u0000\u0000\u000024\u0005"+
+		"\u0007\u0000\u00003#\u0001\u0000\u0000\u00003&\u0001\u0000\u0000\u0000"+
+		"3)\u0001\u0000\u0000\u00003/\u0001\u0000\u0000\u00004\u0007\u0001\u0000"+
+		"\u0000\u000059\u0005\u0004\u0000\u000068\u0005\u0006\u0000\u000076\u0001"+
+		"\u0000\u0000\u00008;\u0001\u0000\u0000\u000097\u0001\u0000\u0000\u0000"+
+		"9:\u0001\u0000\u0000\u0000:<\u0001\u0000\u0000\u0000;9\u0001\u0000\u0000"+
+		"\u0000<=\u0005\u0005\u0000\u0000=\t\u0001\u0000\u0000\u0000>?\u0005\b"+
+		"\u0000\u0000?C\u0005\t\u0000\u0000@A\u0005\b\u0000\u0000AC\u0005\u0000"+
+		"\u0000\u0001B>\u0001\u0000\u0000\u0000B@\u0001\u0000\u0000\u0000C\u000b"+
+		"\u0001\u0000\u0000\u0000\u0006\u0013 /39B";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

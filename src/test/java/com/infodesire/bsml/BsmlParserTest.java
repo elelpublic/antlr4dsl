@@ -1,7 +1,7 @@
-package com.infodesire.poc.antlr4dsl;
+package com.infodesire.bsml;
 
-import com.infodesire.poc.antlr4dsl.model.Expression;
-import com.infodesire.poc.antlr4dsl.model.Query;
+import com.infodesire.bsml.model.Expression;
+import com.infodesire.bsml.model.Query;
 import org.junit.Test;
 
 import java.io.File;
@@ -35,6 +35,17 @@ public class BsmlParserTest {
   public void simpleQuery() throws IOException {
 
     File file = new File( "src/test/samples/query_properties.bsml" );
+    Compiler compiler = new Compiler();
+
+    Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );
+
+  }
+
+
+  @Test
+  public void fullQuery() throws IOException {
+
+    File file = new File( "src/test/samples/query.bsml" );
     Compiler compiler = new Compiler();
 
     Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );

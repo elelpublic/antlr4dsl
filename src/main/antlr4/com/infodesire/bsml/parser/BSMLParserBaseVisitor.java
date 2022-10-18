@@ -1,5 +1,5 @@
 // Generated from java-escape by ANTLR 4.11.1
-package com.infodesire.poc.antlr4dsl.parser;
+package com.infodesire.bsml.parser;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -19,6 +19,13 @@ public class BSMLParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitProg(BSMLParser.ProgContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitQuery(BSMLParser.QueryContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

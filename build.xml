@@ -38,16 +38,16 @@
         <java
                 fork="true"
                 jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
-            <arg value="src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/BSMLLexer.g4" />
-            <arg line="-package com.infodesire.poc.antlr4dsl.parser" />
+            <arg value="src/main/antlr4/com/infodesire/bsml/parser/BSMLLexer.g4" />
+            <arg line="-package com.infodesire.bsml.parser" />
             <arg value="-visitor" />
         </java>
 
         <java
                 fork="true"
                 jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
-                <arg value="src/main/antlr4/com/infodesire/poc/antlr4dsl/parser/BSMLParser.g4" />
-            <arg line="-package com.infodesire.poc.antlr4dsl.parser" />
+                <arg value="src/main/antlr4/com/infodesire/bsml/parser/BSMLParser.g4" />
+            <arg line="-package com.infodesire.bsml.parser" />
             <arg value="-visitor" />
         </java>
 
@@ -71,7 +71,7 @@
     <target name="hello" depends="compile">
         <java
                 classpath="target/classes"
-                classname="com.infodesire.poc.antlr4dsl.Main"
+                classname="com.infodesire.bsml.Main"
         >
             <classpath>
                 <pathelement location="lib/antlr4-runtime-${antlr.version}.jar" />

@@ -1,5 +1,5 @@
 // Generated from java-escape by ANTLR 4.11.1
-package com.infodesire.poc.antlr4dsl.parser;
+package com.infodesire.bsml.parser;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -24,6 +24,18 @@ public class BSMLParserBaseListener implements BSMLParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProg(BSMLParser.ProgContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterQuery(BSMLParser.QueryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitQuery(BSMLParser.QueryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

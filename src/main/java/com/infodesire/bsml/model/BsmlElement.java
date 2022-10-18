@@ -1,4 +1,4 @@
-package com.infodesire.poc.antlr4dsl.model;
+package com.infodesire.bsml.model;
 
 /**
  * All supported elements in a bsml script

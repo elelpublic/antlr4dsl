@@ -23,17 +23,17 @@ public interface BSMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQuery(BSMLParser.QueryContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BSMLParser#lines}.
+	 * Visit a parse tree produced by {@link BSMLParser#queryProperties}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLines(BSMLParser.LinesContext ctx);
+	T visitQueryProperties(BSMLParser.QueryPropertiesContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BSMLParser#line}.
+	 * Visit a parse tree produced by {@link BSMLParser#queryProperty}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLine(BSMLParser.LineContext ctx);
+	T visitQueryProperty(BSMLParser.QueryPropertyContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BSMLParser#name}.
 	 * @param ctx the parse tree

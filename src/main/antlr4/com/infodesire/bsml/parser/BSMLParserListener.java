@@ -28,25 +28,25 @@ public interface BSMLParserListener extends ParseTreeListener {
 	 */
 	void exitQuery(BSMLParser.QueryContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BSMLParser#lines}.
+	 * Enter a parse tree produced by {@link BSMLParser#queryProperties}.
 	 * @param ctx the parse tree
 	 */
-	void enterLines(BSMLParser.LinesContext ctx);
+	void enterQueryProperties(BSMLParser.QueryPropertiesContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BSMLParser#lines}.
+	 * Exit a parse tree produced by {@link BSMLParser#queryProperties}.
 	 * @param ctx the parse tree
 	 */
-	void exitLines(BSMLParser.LinesContext ctx);
+	void exitQueryProperties(BSMLParser.QueryPropertiesContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link BSMLParser#line}.
+	 * Enter a parse tree produced by {@link BSMLParser#queryProperty}.
 	 * @param ctx the parse tree
 	 */
-	void enterLine(BSMLParser.LineContext ctx);
+	void enterQueryProperty(BSMLParser.QueryPropertyContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link BSMLParser#line}.
+	 * Exit a parse tree produced by {@link BSMLParser#queryProperty}.
 	 * @param ctx the parse tree
 	 */
-	void exitLine(BSMLParser.LineContext ctx);
+	void exitQueryProperty(BSMLParser.QueryPropertyContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BSMLParser#name}.
 	 * @param ctx the parse tree

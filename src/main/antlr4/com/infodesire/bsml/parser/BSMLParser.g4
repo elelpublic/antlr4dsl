@@ -12,15 +12,17 @@ prog
     ;
 
 query
-    : QUERY OPEN ( lines )* CLOSE
+    : QUERY OPEN (
+        queryProperties )*
+      CLOSE
     ;
 
-lines
-    : line
-    | lines line
+queryProperties
+    : queryProperty
+    | queryProperties queryProperty
     ;
 
-line
+queryProperty
     : name EOL
     | name EOF
     | name value

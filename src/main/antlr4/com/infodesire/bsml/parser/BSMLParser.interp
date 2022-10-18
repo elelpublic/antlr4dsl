@@ -25,8 +25,8 @@ EOL
 rule names:
 prog
 query
-lines
-line
+queryProperties
+queryProperty
 name
 value
 

@@ -43,17 +43,6 @@ public class BsmlParserTest {
 
 
   @Test
-  public void debug() throws IOException {
-
-    File file = new File( "src/test/samples/query_debug.bsml" );
-    Compiler compiler = new Compiler();
-
-    Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );
-
-  }
-
-
-  @Test
   public void fullQuery() throws IOException {
 
     File file = new File( "src/test/samples/query.bsml" );

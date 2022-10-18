@@ -32,14 +32,14 @@ public class BSMLParserBaseVisitor<T> extends AbstractParseTreeVisitor<T> implem
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLines(BSMLParser.LinesContext ctx) { return visitChildren(ctx); }
+	@Override public T visitQueryProperties(BSMLParser.QueryPropertiesContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitLine(BSMLParser.LineContext ctx) { return visitChildren(ctx); }
+	@Override public T visitQueryProperty(BSMLParser.QueryPropertyContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

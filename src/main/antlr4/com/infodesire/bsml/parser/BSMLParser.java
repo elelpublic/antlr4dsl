@@ -20,11 +20,11 @@ public class BSMLParser extends Parser {
 		QUERY=1, OPEN=2, CLOSE=3, IDENTIFIER=4, COLON=5, WHITESPACE=6, NEWLINE=7, 
 		VALUE=8, EOL=9;
 	public static final int
-		RULE_prog = 0, RULE_query = 1, RULE_lines = 2, RULE_line = 3, RULE_name = 4, 
-		RULE_value = 5;
+		RULE_prog = 0, RULE_query = 1, RULE_queryProperties = 2, RULE_queryProperty = 3, 
+		RULE_name = 4, RULE_value = 5;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"prog", "query", "lines", "line", "name", "value"
+			"prog", "query", "queryProperties", "queryProperty", "name", "value"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -160,11 +160,11 @@ public class BSMLParser extends Parser {
 		public TerminalNode QUERY() { return getToken(BSMLParser.QUERY, 0); }
 		public TerminalNode OPEN() { return getToken(BSMLParser.OPEN, 0); }
 		public TerminalNode CLOSE() { return getToken(BSMLParser.CLOSE, 0); }
-		public List<LinesContext> lines() {
-			return getRuleContexts(LinesContext.class);
+		public List<QueryPropertiesContext> queryProperties() {
+			return getRuleContexts(QueryPropertiesContext.class);
 		}
-		public LinesContext lines(int i) {
-			return getRuleContext(LinesContext.class,i);
+		public QueryPropertiesContext queryProperties(int i) {
+			return getRuleContext(QueryPropertiesContext.class,i);
 		}
 		public QueryContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -203,7 +203,7 @@ public class BSMLParser extends Parser {
 				{
 				{
 				setState(20);
-				lines(0);
+				queryProperties(0);
 				}
 				}
 				setState(25);
@@ -226,50 +226,50 @@ public class BSMLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class LinesContext extends ParserRuleContext {
-		public LineContext line() {
-			return getRuleContext(LineContext.class,0);
+	public static class QueryPropertiesContext extends ParserRuleContext {
+		public QueryPropertyContext queryProperty() {
+			return getRuleContext(QueryPropertyContext.class,0);
 		}
-		public LinesContext lines() {
-			return getRuleContext(LinesContext.class,0);
+		public QueryPropertiesContext queryProperties() {
+			return getRuleContext(QueryPropertiesContext.class,0);
 		}
-		public LinesContext(ParserRuleContext parent, int invokingState) {
+		public QueryPropertiesContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_lines; }
+		@Override public int getRuleIndex() { return RULE_queryProperties; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterLines(this);
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterQueryProperties(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitLines(this);
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitQueryProperties(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitLines(this);
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitQueryProperties(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final LinesContext lines() throws RecognitionException {
-		return lines(0);
+	public final QueryPropertiesContext queryProperties() throws RecognitionException {
+		return queryProperties(0);
 	}
 
-	private LinesContext lines(int _p) throws RecognitionException {
+	private QueryPropertiesContext queryProperties(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		LinesContext _localctx = new LinesContext(_ctx, _parentState);
-		LinesContext _prevctx = _localctx;
+		QueryPropertiesContext _localctx = new QueryPropertiesContext(_ctx, _parentState);
+		QueryPropertiesContext _prevctx = _localctx;
 		int _startState = 4;
-		enterRecursionRule(_localctx, 4, RULE_lines, _p);
+		enterRecursionRule(_localctx, 4, RULE_queryProperties, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			{
 			setState(29);
-			line();
+			queryProperty();
 			}
 			_ctx.stop = _input.LT(-1);
 			setState(35);
@@ -281,12 +281,12 @@ public class BSMLParser extends Parser {
 					_prevctx = _localctx;
 					{
 					{
-					_localctx = new LinesContext(_parentctx, _parentState);
-					pushNewRecursionContext(_localctx, _startState, RULE_lines);
+					_localctx = new QueryPropertiesContext(_parentctx, _parentState);
+					pushNewRecursionContext(_localctx, _startState, RULE_queryProperties);
 					setState(31);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
 					setState(32);
-					line();
+					queryProperty();
 					}
 					} 
 				}
@@ -308,7 +308,7 @@ public class BSMLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class LineContext extends ParserRuleContext {
+	public static class QueryPropertyContext extends ParserRuleContext {
 		public NameContext name() {
 			return getRuleContext(NameContext.class,0);
 		}
@@ -322,28 +322,28 @@ public class BSMLParser extends Parser {
 		public TerminalNode WHITESPACE(int i) {
 			return getToken(BSMLParser.WHITESPACE, i);
 		}
-		public LineContext(ParserRuleContext parent, int invokingState) {
+		public QueryPropertyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_line; }
+		@Override public int getRuleIndex() { return RULE_queryProperty; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterLine(this);
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterQueryProperty(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitLine(this);
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitQueryProperty(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitLine(this);
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitQueryProperty(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final LineContext line() throws RecognitionException {
-		LineContext _localctx = new LineContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_line);
+	public final QueryPropertyContext queryProperty() throws RecognitionException {
+		QueryPropertyContext _localctx = new QueryPropertyContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_queryProperty);
 		int _la;
 		try {
 			setState(54);
@@ -540,11 +540,11 @@ public class BSMLParser extends Parser {
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
 		case 2:
-			return lines_sempred((LinesContext)_localctx, predIndex);
+			return queryProperties_sempred((QueryPropertiesContext)_localctx, predIndex);
 		}
 		return true;
 	}
-	private boolean lines_sempred(LinesContext _localctx, int predIndex) {
+	private boolean queryProperties_sempred(QueryPropertiesContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
 			return precpred(_ctx, 1);

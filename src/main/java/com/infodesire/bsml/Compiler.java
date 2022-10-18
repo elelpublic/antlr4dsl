@@ -30,8 +30,8 @@ public class Compiler {
       return visit( node.getChild( 0 ), parser );
     }
 
-    if( node instanceof com.infodesire.bsml.parser.BSMLParser.LinesContext ) {
-      return visitLines( ( BSMLParser.LinesContext ) node, parser );
+    if( node instanceof com.infodesire.bsml.parser.BSMLParser.QueryPropertiesContext ) {
+      return visitLines( ( BSMLParser.QueryPropertiesContext ) node, parser );
     }
 
     if( node instanceof BSMLParser.QueryContext ) {
@@ -46,13 +46,13 @@ public class Compiler {
     return new Query();
   }
 
-  private BsmlElement visitLines( BSMLParser.LinesContext lines, Parser parser ) {
-    for( ParseTree child : lines.children ) {
-      if( child instanceof BSMLParser.LineContext ) {
-        visitLine( ( BSMLParser.LineContext) child, parser );
+  private BsmlElement visitLines( BSMLParser.QueryPropertiesContext properties, Parser parser ) {
+    for( ParseTree child : properties.children ) {
+      if( child instanceof BSMLParser.QueryPropertyContext ) {
+        visitLine( ( BSMLParser.QueryPropertyContext) child, parser );
       }
-      else if( child instanceof BSMLParser.LinesContext ) {
-        visitLines( (BSMLParser.LinesContext) child, parser );
+      else if( child instanceof BSMLParser.QueryPropertiesContext ) {
+        visitLines( (BSMLParser.QueryPropertiesContext) child, parser );
       }
       else {
         throw new BsmlVersionException( child, parser );
@@ -61,13 +61,13 @@ public class Compiler {
     return null;
   }
 
-  private void visitLine( BSMLParser.LineContext line, Parser parser ) {
-    if( line.children.get( 0 ) instanceof BSMLParser.NameContext ) {
-      BSMLParser.NameContext nameContext = (BSMLParser.NameContext) line.children.get( 0 );
+  private void visitLine( BSMLParser.QueryPropertyContext property, Parser parser ) {
+    if( property.children.get( 0 ) instanceof BSMLParser.NameContext ) {
+      BSMLParser.NameContext nameContext = (BSMLParser.NameContext) property.children.get( 0 );
       String name = nameContext.IDENTIFIER().getSymbol().getText();
       String value = null;
-      if( line.children.get( 1 ) instanceof BSMLParser.ValueContext ) {
-        BSMLParser.ValueContext valueContext = (BSMLParser.ValueContext) line.children.get( 1 );
+      if( property.children.get( 1 ) instanceof BSMLParser.ValueContext ) {
+        BSMLParser.ValueContext valueContext = (BSMLParser.ValueContext) property.children.get( 1 );
         value = valueContext.VALUE().getText();
       }
       System.out.println( "NAME: " + name + " VALUE: " + value );

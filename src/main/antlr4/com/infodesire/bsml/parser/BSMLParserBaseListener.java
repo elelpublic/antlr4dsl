@@ -41,25 +41,25 @@ public class BSMLParserBaseListener implements BSMLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLines(BSMLParser.LinesContext ctx) { }
+	@Override public void enterQueryProperties(BSMLParser.QueryPropertiesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLines(BSMLParser.LinesContext ctx) { }
+	@Override public void exitQueryProperties(BSMLParser.QueryPropertiesContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLine(BSMLParser.LineContext ctx) { }
+	@Override public void enterQueryProperty(BSMLParser.QueryPropertyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLine(BSMLParser.LineContext ctx) { }
+	@Override public void exitQueryProperty(BSMLParser.QueryPropertyContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -10,7 +10,7 @@ import java.nio.charset.Charset;
 
 import static org.junit.Assert.assertEquals;
 
-public class BsmlTest {
+public class BsmlParserTest {
 
   //@Test
   public void simpleBinaryExpression() throws IOException {
@@ -34,7 +34,7 @@ public class BsmlTest {
   @Test
   public void simpleQuery() throws IOException {
 
-    File file = new File( "src/test/samples/query1.bsml" );
+    File file = new File( "src/test/samples/query_properties.bsml" );
     Compiler compiler = new Compiler();
 
     Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );

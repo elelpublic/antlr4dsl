@@ -8,12 +8,11 @@ options {
 
 prog
     : EOF
-    | lines EOF
     | query EOF
     ;
 
 query
-    : QUERY OPEN CLOSE
+    : QUERY OPEN ( lines )* CLOSE
     ;
 
 lines

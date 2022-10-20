@@ -23,11 +23,47 @@ public interface BSMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQuery(BSMLParser.QueryContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BSMLParser#queryProperties}.
+	 * Visit a parse tree produced by {@link BSMLParser#where}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitQueryProperties(BSMLParser.QueryPropertiesContext ctx);
+	T visitWhere(BSMLParser.WhereContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BSMLParser#queryExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQueryExpression(BSMLParser.QueryExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BSMLParser#orExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOrExpression(BSMLParser.OrExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BSMLParser#comparator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitComparator(BSMLParser.ComparatorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BSMLParser#field}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitField(BSMLParser.FieldContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BSMLParser#queryPropertyLine}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitQueryPropertyLine(BSMLParser.QueryPropertyLineContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link BSMLParser#emptyLine}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEmptyLine(BSMLParser.EmptyLineContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BSMLParser#queryProperty}.
 	 * @param ctx the parse tree

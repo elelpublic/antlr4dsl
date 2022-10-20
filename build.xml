@@ -35,6 +35,8 @@
 
     <target name="antlr.generate" depends="tools.install">
 
+        <!-- BSML -->
+
         <java
                 fork="true"
                 jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
@@ -48,6 +50,24 @@
                 jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
                 <arg value="src/main/antlr4/com/infodesire/bsml/parser/BSMLParser.g4" />
             <arg line="-package com.infodesire.bsml.parser" />
+            <arg value="-visitor" />
+        </java>
+
+        <!-- Wiki -->
+
+        <java
+                fork="true"
+                jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
+            <arg value="src/main/antlr4/com/infodesire/wiki/parser/WikiLexer.g4" />
+            <arg line="-package com.infodesire.wiki.parser" />
+            <arg value="-visitor" />
+        </java>
+
+        <java
+                fork="true"
+                jar="tools/antlr/antlr-${antlr.version}-complete.jar" >
+            <arg value="src/main/antlr4/com/infodesire/wiki/parser/WikiParser.g4" />
+            <arg line="-package com.infodesire.wiki.parser" />
             <arg value="-visitor" />
         </java>
 

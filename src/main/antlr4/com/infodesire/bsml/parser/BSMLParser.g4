@@ -12,30 +12,59 @@ prog
     ;
 
 query
-    : QUERY OPEN (
-        queryProperties )*
-      CLOSE
+    : QUERY LCURLY
+        queryPropertyLine*
+        where?
+      RCURLY
     ;
 
-queryProperties
+where
+    : WHERE LCURLY
+        queryExpression*
+      RCURLY
+    ;
+
+queryExpression
+    : field comparator VALUE
+    | orExpression
+    ;
+
+orExpression
+    : OR LCURLY
+        queryExpression*
+      RCURLY
+    ;
+
+comparator
+    : LESS
+    | LESS_OR_EQUAL
+    | EQUAL
+    | NOT_EQUAL
+    | GREATER
+    | GREATER_OR_EQUAL
+    ;
+
+field
+    : IDENTIFIER
+    ;
+
+queryPropertyLine
     : queryProperty
-    | queryProperties queryProperty
+    | emptyLine
+    ;
+
+emptyLine
+    : WHITESPACE* NEWLINE
     ;
 
 queryProperty
-    : name EOL
-    | name EOF
-    | name value
-    | WHITESPACE* NEWLINE
+    : name COLON value
     ;
 
 name
-    : IDENTIFIER WHITESPACE* COLON
+    : IDENTIFIER
     ;
 
 value
-    : VALUE EOL
-    | VALUE EOF
+    : VALUE
     ;
-
-

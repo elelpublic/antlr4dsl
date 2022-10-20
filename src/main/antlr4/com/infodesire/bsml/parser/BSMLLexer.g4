@@ -3,15 +3,26 @@ lexer grammar BSMLLexer;
 
 // LEXER ---------------------------------------------
 
-QUERY
-    : 'query'
-    ;
+// keywords
 
-OPEN
+QUERY: 'query';
+WHERE: 'where';
+OR: 'or';
+
+// query operators
+LESS: '<'  -> pushMode( UNTIL_EOL );
+LESS_OR_EQUAL: '<='  -> pushMode( UNTIL_EOL );
+EQUAL: '='  -> pushMode( UNTIL_EOL );
+NOT_EQUAL: '!='  -> pushMode( UNTIL_EOL );
+GREATER: '>'  -> pushMode( UNTIL_EOL );
+GREATER_OR_EQUAL: '>='  -> pushMode( UNTIL_EOL );
+
+// language elements
+LCURLY
     : '{'
     ;
 
-CLOSE
+RCURLY
     : '}'
     ;
 
@@ -23,24 +34,25 @@ COLON
     : ':' -> pushMode( UNTIL_EOL )
     ;
 
-WHITESPACE
-    : [ \t] -> skip
-    ;
-
 NEWLINE
     : [\r\n] -> skip
     ;
 
+WHITESPACE
+    : [ \t] -> skip
+    ;
 
-// ------------------------------------------------------
-// values can go as far as EOL
+LINE_COMMENT
+    :   '//' ~[\r\n]* -> skip
+    ;
+
+// parse a value until end of line EOL
 mode UNTIL_EOL;
 
 VALUE
-    : ~[\r\n]*
+    : .*? EOL -> popMode
     ;
 
 EOL
-    : [\r\n] -> popMode
+    : [\r\n]
     ;
-

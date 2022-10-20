@@ -10,13 +10,13 @@ import java.nio.charset.Charset;
 
 import static org.junit.Assert.assertEquals;
 
-public class BsmlParserTest {
+public class BsmlCompilerTest {
 
   //@Test
   public void simpleBinaryExpression() throws IOException {
 
     File file = new File( "src/test/samples/test1.bsml" );
-    Compiler compiler = new Compiler();
+    BsmlCompiler compiler = new BsmlCompiler();
 
     Expression expression = (Expression) compiler.compile( file, Charset.forName( "UTF-8" ) );
 
@@ -35,7 +35,7 @@ public class BsmlParserTest {
   public void simpleQuery() throws IOException {
 
     File file = new File( "src/test/samples/query_properties.bsml" );
-    Compiler compiler = new Compiler();
+    BsmlCompiler compiler = new BsmlCompiler();
 
     Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );
 
@@ -46,7 +46,7 @@ public class BsmlParserTest {
   public void fullQuery() throws IOException {
 
     File file = new File( "src/test/samples/query.bsml" );
-    Compiler compiler = new Compiler();
+    BsmlCompiler compiler = new BsmlCompiler();
 
     Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );
 

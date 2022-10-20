@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-public class Compiler {
+public class BsmlCompiler {
 
 
   public BsmlElement visit( ParseTree node, Parser parser ) {
@@ -104,7 +104,7 @@ public class Compiler {
     parser.addErrorListener( listener );
 
     ParseTree tree = parser.prog();
-    return new Compiler().visit( tree, parser );
+    return new BsmlCompiler().visit( tree, parser );
 
   }
 

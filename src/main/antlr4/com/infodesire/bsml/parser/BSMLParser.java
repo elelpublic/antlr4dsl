@@ -17,28 +17,33 @@ public class BSMLParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		QUERY=1, OPEN=2, CLOSE=3, IDENTIFIER=4, COLON=5, WHITESPACE=6, NEWLINE=7, 
-		VALUE=8, EOL=9;
+		QUERY=1, WHERE=2, OR=3, LESS=4, LESS_OR_EQUAL=5, EQUAL=6, NOT_EQUAL=7, 
+		GREATER=8, GREATER_OR_EQUAL=9, LCURLY=10, RCURLY=11, IDENTIFIER=12, COLON=13, 
+		NEWLINE=14, WHITESPACE=15, LINE_COMMENT=16, VALUE=17, EOL=18;
 	public static final int
-		RULE_prog = 0, RULE_query = 1, RULE_queryProperties = 2, RULE_queryProperty = 3, 
-		RULE_name = 4, RULE_value = 5;
+		RULE_prog = 0, RULE_query = 1, RULE_where = 2, RULE_queryExpression = 3, 
+		RULE_orExpression = 4, RULE_comparator = 5, RULE_field = 6, RULE_queryPropertyLine = 7, 
+		RULE_emptyLine = 8, RULE_queryProperty = 9, RULE_name = 10, RULE_value = 11;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"prog", "query", "queryProperties", "queryProperty", "name", "value"
+			"prog", "query", "where", "queryExpression", "orExpression", "comparator", 
+			"field", "queryPropertyLine", "emptyLine", "queryProperty", "name", "value"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'query'", "'{'", "'}'", null, "':'"
+			null, "'query'", "'where'", "'or'", "'<'", "'<='", "'='", "'!='", "'>'", 
+			"'>='", "'{'", "'}'", null, "':'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "QUERY", "OPEN", "CLOSE", "IDENTIFIER", "COLON", "WHITESPACE", 
-			"NEWLINE", "VALUE", "EOL"
+			null, "QUERY", "WHERE", "OR", "LESS", "LESS_OR_EQUAL", "EQUAL", "NOT_EQUAL", 
+			"GREATER", "GREATER_OR_EQUAL", "LCURLY", "RCURLY", "IDENTIFIER", "COLON", 
+			"NEWLINE", "WHITESPACE", "LINE_COMMENT", "VALUE", "EOL"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -121,22 +126,22 @@ public class BSMLParser extends Parser {
 		ProgContext _localctx = new ProgContext(_ctx, getState());
 		enterRule(_localctx, 0, RULE_prog);
 		try {
-			setState(16);
+			setState(28);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case EOF:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(12);
+				setState(24);
 				match(EOF);
 				}
 				break;
 			case QUERY:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(13);
+				setState(25);
 				query();
-				setState(14);
+				setState(26);
 				match(EOF);
 				}
 				break;
@@ -158,13 +163,16 @@ public class BSMLParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class QueryContext extends ParserRuleContext {
 		public TerminalNode QUERY() { return getToken(BSMLParser.QUERY, 0); }
-		public TerminalNode OPEN() { return getToken(BSMLParser.OPEN, 0); }
-		public TerminalNode CLOSE() { return getToken(BSMLParser.CLOSE, 0); }
-		public List<QueryPropertiesContext> queryProperties() {
-			return getRuleContexts(QueryPropertiesContext.class);
+		public TerminalNode LCURLY() { return getToken(BSMLParser.LCURLY, 0); }
+		public TerminalNode RCURLY() { return getToken(BSMLParser.RCURLY, 0); }
+		public List<QueryPropertyLineContext> queryPropertyLine() {
+			return getRuleContexts(QueryPropertyLineContext.class);
 		}
-		public QueryPropertiesContext queryProperties(int i) {
-			return getRuleContext(QueryPropertiesContext.class,i);
+		public QueryPropertyLineContext queryPropertyLine(int i) {
+			return getRuleContext(QueryPropertyLineContext.class,i);
+		}
+		public WhereContext where() {
+			return getRuleContext(WhereContext.class,0);
 		}
 		public QueryContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -192,26 +200,36 @@ public class BSMLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(18);
+			setState(30);
 			match(QUERY);
-			setState(19);
-			match(OPEN);
-			setState(23);
+			setState(31);
+			match(LCURLY);
+			setState(35);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 208L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 53248L) != 0) {
 				{
 				{
-				setState(20);
-				queryProperties(0);
+				setState(32);
+				queryPropertyLine();
 				}
 				}
-				setState(25);
+				setState(37);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(26);
-			match(CLOSE);
+			setState(39);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			if (_la==WHERE) {
+				{
+				setState(38);
+				where();
+				}
+			}
+
+			setState(41);
+			match(RCURLY);
 			}
 		}
 		catch (RecognitionException re) {
@@ -226,73 +244,259 @@ public class BSMLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class QueryPropertiesContext extends ParserRuleContext {
-		public QueryPropertyContext queryProperty() {
-			return getRuleContext(QueryPropertyContext.class,0);
+	public static class WhereContext extends ParserRuleContext {
+		public TerminalNode WHERE() { return getToken(BSMLParser.WHERE, 0); }
+		public TerminalNode LCURLY() { return getToken(BSMLParser.LCURLY, 0); }
+		public TerminalNode RCURLY() { return getToken(BSMLParser.RCURLY, 0); }
+		public List<QueryExpressionContext> queryExpression() {
+			return getRuleContexts(QueryExpressionContext.class);
 		}
-		public QueryPropertiesContext queryProperties() {
-			return getRuleContext(QueryPropertiesContext.class,0);
+		public QueryExpressionContext queryExpression(int i) {
+			return getRuleContext(QueryExpressionContext.class,i);
 		}
-		public QueryPropertiesContext(ParserRuleContext parent, int invokingState) {
+		public WhereContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_queryProperties; }
+		@Override public int getRuleIndex() { return RULE_where; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterQueryProperties(this);
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterWhere(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitQueryProperties(this);
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitWhere(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitQueryProperties(this);
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitWhere(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final QueryPropertiesContext queryProperties() throws RecognitionException {
-		return queryProperties(0);
-	}
-
-	private QueryPropertiesContext queryProperties(int _p) throws RecognitionException {
-		ParserRuleContext _parentctx = _ctx;
-		int _parentState = getState();
-		QueryPropertiesContext _localctx = new QueryPropertiesContext(_ctx, _parentState);
-		QueryPropertiesContext _prevctx = _localctx;
-		int _startState = 4;
-		enterRecursionRule(_localctx, 4, RULE_queryProperties, _p);
+	public final WhereContext where() throws RecognitionException {
+		WhereContext _localctx = new WhereContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_where);
+		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			{
-			setState(29);
-			queryProperty();
-			}
-			_ctx.stop = _input.LT(-1);
-			setState(35);
+			setState(43);
+			match(WHERE);
+			setState(44);
+			match(LCURLY);
+			setState(48);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = _localctx;
-					{
-					{
-					_localctx = new QueryPropertiesContext(_parentctx, _parentState);
-					pushNewRecursionContext(_localctx, _startState, RULE_queryProperties);
-					setState(31);
-					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-					setState(32);
-					queryProperty();
-					}
-					} 
+			_la = _input.LA(1);
+			while (_la==OR || _la==IDENTIFIER) {
+				{
+				{
+				setState(45);
+				queryExpression();
 				}
-				setState(37);
+				}
+				setState(50);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+				_la = _input.LA(1);
+			}
+			setState(51);
+			match(RCURLY);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class QueryExpressionContext extends ParserRuleContext {
+		public FieldContext field() {
+			return getRuleContext(FieldContext.class,0);
+		}
+		public ComparatorContext comparator() {
+			return getRuleContext(ComparatorContext.class,0);
+		}
+		public TerminalNode VALUE() { return getToken(BSMLParser.VALUE, 0); }
+		public OrExpressionContext orExpression() {
+			return getRuleContext(OrExpressionContext.class,0);
+		}
+		public QueryExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_queryExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterQueryExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitQueryExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitQueryExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final QueryExpressionContext queryExpression() throws RecognitionException {
+		QueryExpressionContext _localctx = new QueryExpressionContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_queryExpression);
+		try {
+			setState(58);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case IDENTIFIER:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(53);
+				field();
+				setState(54);
+				comparator();
+				setState(55);
+				match(VALUE);
+				}
+				break;
+			case OR:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(57);
+				orExpression();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class OrExpressionContext extends ParserRuleContext {
+		public TerminalNode OR() { return getToken(BSMLParser.OR, 0); }
+		public TerminalNode LCURLY() { return getToken(BSMLParser.LCURLY, 0); }
+		public TerminalNode RCURLY() { return getToken(BSMLParser.RCURLY, 0); }
+		public List<QueryExpressionContext> queryExpression() {
+			return getRuleContexts(QueryExpressionContext.class);
+		}
+		public QueryExpressionContext queryExpression(int i) {
+			return getRuleContext(QueryExpressionContext.class,i);
+		}
+		public OrExpressionContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_orExpression; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterOrExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitOrExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitOrExpression(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final OrExpressionContext orExpression() throws RecognitionException {
+		OrExpressionContext _localctx = new OrExpressionContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_orExpression);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(60);
+			match(OR);
+			setState(61);
+			match(LCURLY);
+			setState(65);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==OR || _la==IDENTIFIER) {
+				{
+				{
+				setState(62);
+				queryExpression();
+				}
+				}
+				setState(67);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(68);
+			match(RCURLY);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class ComparatorContext extends ParserRuleContext {
+		public TerminalNode LESS() { return getToken(BSMLParser.LESS, 0); }
+		public TerminalNode LESS_OR_EQUAL() { return getToken(BSMLParser.LESS_OR_EQUAL, 0); }
+		public TerminalNode EQUAL() { return getToken(BSMLParser.EQUAL, 0); }
+		public TerminalNode NOT_EQUAL() { return getToken(BSMLParser.NOT_EQUAL, 0); }
+		public TerminalNode GREATER() { return getToken(BSMLParser.GREATER, 0); }
+		public TerminalNode GREATER_OR_EQUAL() { return getToken(BSMLParser.GREATER_OR_EQUAL, 0); }
+		public ComparatorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_comparator; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterComparator(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitComparator(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitComparator(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ComparatorContext comparator() throws RecognitionException {
+		ComparatorContext _localctx = new ComparatorContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_comparator);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(70);
+			_la = _input.LA(1);
+			if ( !(((_la) & ~0x3f) == 0 && ((1L << _la) & 1008L) != 0) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
 			}
 			}
 		}
@@ -302,7 +506,176 @@ public class BSMLParser extends Parser {
 			_errHandler.recover(this, re);
 		}
 		finally {
-			unrollRecursionContexts(_parentctx);
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class FieldContext extends ParserRuleContext {
+		public TerminalNode IDENTIFIER() { return getToken(BSMLParser.IDENTIFIER, 0); }
+		public FieldContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_field; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterField(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitField(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitField(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FieldContext field() throws RecognitionException {
+		FieldContext _localctx = new FieldContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_field);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(72);
+			match(IDENTIFIER);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class QueryPropertyLineContext extends ParserRuleContext {
+		public QueryPropertyContext queryProperty() {
+			return getRuleContext(QueryPropertyContext.class,0);
+		}
+		public EmptyLineContext emptyLine() {
+			return getRuleContext(EmptyLineContext.class,0);
+		}
+		public QueryPropertyLineContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_queryPropertyLine; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterQueryPropertyLine(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitQueryPropertyLine(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitQueryPropertyLine(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final QueryPropertyLineContext queryPropertyLine() throws RecognitionException {
+		QueryPropertyLineContext _localctx = new QueryPropertyLineContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_queryPropertyLine);
+		try {
+			setState(76);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case IDENTIFIER:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(74);
+				queryProperty();
+				}
+				break;
+			case NEWLINE:
+			case WHITESPACE:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(75);
+				emptyLine();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class EmptyLineContext extends ParserRuleContext {
+		public TerminalNode NEWLINE() { return getToken(BSMLParser.NEWLINE, 0); }
+		public List<TerminalNode> WHITESPACE() { return getTokens(BSMLParser.WHITESPACE); }
+		public TerminalNode WHITESPACE(int i) {
+			return getToken(BSMLParser.WHITESPACE, i);
+		}
+		public EmptyLineContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_emptyLine; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterEmptyLine(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitEmptyLine(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitEmptyLine(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final EmptyLineContext emptyLine() throws RecognitionException {
+		EmptyLineContext _localctx = new EmptyLineContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_emptyLine);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(81);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==WHITESPACE) {
+				{
+				{
+				setState(78);
+				match(WHITESPACE);
+				}
+				}
+				setState(83);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(84);
+			match(NEWLINE);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
 		}
 		return _localctx;
 	}
@@ -312,15 +685,9 @@ public class BSMLParser extends Parser {
 		public NameContext name() {
 			return getRuleContext(NameContext.class,0);
 		}
-		public TerminalNode EOL() { return getToken(BSMLParser.EOL, 0); }
-		public TerminalNode EOF() { return getToken(BSMLParser.EOF, 0); }
+		public TerminalNode COLON() { return getToken(BSMLParser.COLON, 0); }
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
-		}
-		public TerminalNode NEWLINE() { return getToken(BSMLParser.NEWLINE, 0); }
-		public List<TerminalNode> WHITESPACE() { return getTokens(BSMLParser.WHITESPACE); }
-		public TerminalNode WHITESPACE(int i) {
-			return getToken(BSMLParser.WHITESPACE, i);
 		}
 		public QueryPropertyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -343,60 +710,16 @@ public class BSMLParser extends Parser {
 
 	public final QueryPropertyContext queryProperty() throws RecognitionException {
 		QueryPropertyContext _localctx = new QueryPropertyContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_queryProperty);
-		int _la;
+		enterRule(_localctx, 18, RULE_queryProperty);
 		try {
-			setState(54);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(38);
-				name();
-				setState(39);
-				match(EOL);
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(41);
-				name();
-				setState(42);
-				match(EOF);
-				}
-				break;
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(44);
-				name();
-				setState(45);
-				value();
-				}
-				break;
-			case 4:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(50);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				while (_la==WHITESPACE) {
-					{
-					{
-					setState(47);
-					match(WHITESPACE);
-					}
-					}
-					setState(52);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				}
-				setState(53);
-				match(NEWLINE);
-				}
-				break;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(86);
+			name();
+			setState(87);
+			match(COLON);
+			setState(88);
+			value();
 			}
 		}
 		catch (RecognitionException re) {
@@ -413,11 +736,6 @@ public class BSMLParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class NameContext extends ParserRuleContext {
 		public TerminalNode IDENTIFIER() { return getToken(BSMLParser.IDENTIFIER, 0); }
-		public TerminalNode COLON() { return getToken(BSMLParser.COLON, 0); }
-		public List<TerminalNode> WHITESPACE() { return getTokens(BSMLParser.WHITESPACE); }
-		public TerminalNode WHITESPACE(int i) {
-			return getToken(BSMLParser.WHITESPACE, i);
-		}
 		public NameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -439,29 +757,12 @@ public class BSMLParser extends Parser {
 
 	public final NameContext name() throws RecognitionException {
 		NameContext _localctx = new NameContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_name);
-		int _la;
+		enterRule(_localctx, 20, RULE_name);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(56);
+			setState(90);
 			match(IDENTIFIER);
-			setState(60);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==WHITESPACE) {
-				{
-				{
-				setState(57);
-				match(WHITESPACE);
-				}
-				}
-				setState(62);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
-			setState(63);
-			match(COLON);
 			}
 		}
 		catch (RecognitionException re) {
@@ -478,8 +779,6 @@ public class BSMLParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class ValueContext extends ParserRuleContext {
 		public TerminalNode VALUE() { return getToken(BSMLParser.VALUE, 0); }
-		public TerminalNode EOL() { return getToken(BSMLParser.EOL, 0); }
-		public TerminalNode EOF() { return getToken(BSMLParser.EOF, 0); }
 		public ValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -501,29 +800,12 @@ public class BSMLParser extends Parser {
 
 	public final ValueContext value() throws RecognitionException {
 		ValueContext _localctx = new ValueContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_value);
+		enterRule(_localctx, 22, RULE_value);
 		try {
-			setState(69);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(65);
-				match(VALUE);
-				setState(66);
-				match(EOL);
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(67);
-				match(VALUE);
-				setState(68);
-				match(EOF);
-				}
-				break;
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(92);
+			match(VALUE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -537,65 +819,58 @@ public class BSMLParser extends Parser {
 		return _localctx;
 	}
 
-	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
-		switch (ruleIndex) {
-		case 2:
-			return queryProperties_sempred((QueryPropertiesContext)_localctx, predIndex);
-		}
-		return true;
-	}
-	private boolean queryProperties_sempred(QueryPropertiesContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 0:
-			return precpred(_ctx, 1);
-		}
-		return true;
-	}
-
 	public static final String _serializedATN =
-		"\u0004\u0001\tH\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0012_\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
-		"\u0005\u0007\u0005\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0003"+
-		"\u0000\u0011\b\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0005\u0001\u0016"+
-		"\b\u0001\n\u0001\f\u0001\u0019\t\u0001\u0001\u0001\u0001\u0001\u0001\u0002"+
-		"\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0005\u0002\"\b\u0002"+
-		"\n\u0002\f\u0002%\t\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003"+
-		"\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003"+
-		"\u0005\u00031\b\u0003\n\u0003\f\u00034\t\u0003\u0001\u0003\u0003\u0003"+
-		"7\b\u0003\u0001\u0004\u0001\u0004\u0005\u0004;\b\u0004\n\u0004\f\u0004"+
-		">\t\u0004\u0001\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0003\u0005F\b\u0005\u0001\u0005\u0000\u0001\u0004\u0006"+
-		"\u0000\u0002\u0004\u0006\b\n\u0000\u0000J\u0000\u0010\u0001\u0000\u0000"+
-		"\u0000\u0002\u0012\u0001\u0000\u0000\u0000\u0004\u001c\u0001\u0000\u0000"+
-		"\u0000\u00066\u0001\u0000\u0000\u0000\b8\u0001\u0000\u0000\u0000\nE\u0001"+
-		"\u0000\u0000\u0000\f\u0011\u0005\u0000\u0000\u0001\r\u000e\u0003\u0002"+
-		"\u0001\u0000\u000e\u000f\u0005\u0000\u0000\u0001\u000f\u0011\u0001\u0000"+
-		"\u0000\u0000\u0010\f\u0001\u0000\u0000\u0000\u0010\r\u0001\u0000\u0000"+
-		"\u0000\u0011\u0001\u0001\u0000\u0000\u0000\u0012\u0013\u0005\u0001\u0000"+
-		"\u0000\u0013\u0017\u0005\u0002\u0000\u0000\u0014\u0016\u0003\u0004\u0002"+
-		"\u0000\u0015\u0014\u0001\u0000\u0000\u0000\u0016\u0019\u0001\u0000\u0000"+
-		"\u0000\u0017\u0015\u0001\u0000\u0000\u0000\u0017\u0018\u0001\u0000\u0000"+
-		"\u0000\u0018\u001a\u0001\u0000\u0000\u0000\u0019\u0017\u0001\u0000\u0000"+
-		"\u0000\u001a\u001b\u0005\u0003\u0000\u0000\u001b\u0003\u0001\u0000\u0000"+
-		"\u0000\u001c\u001d\u0006\u0002\uffff\uffff\u0000\u001d\u001e\u0003\u0006"+
-		"\u0003\u0000\u001e#\u0001\u0000\u0000\u0000\u001f \n\u0001\u0000\u0000"+
-		" \"\u0003\u0006\u0003\u0000!\u001f\u0001\u0000\u0000\u0000\"%\u0001\u0000"+
-		"\u0000\u0000#!\u0001\u0000\u0000\u0000#$\u0001\u0000\u0000\u0000$\u0005"+
-		"\u0001\u0000\u0000\u0000%#\u0001\u0000\u0000\u0000&\'\u0003\b\u0004\u0000"+
-		"\'(\u0005\t\u0000\u0000(7\u0001\u0000\u0000\u0000)*\u0003\b\u0004\u0000"+
-		"*+\u0005\u0000\u0000\u0001+7\u0001\u0000\u0000\u0000,-\u0003\b\u0004\u0000"+
-		"-.\u0003\n\u0005\u0000.7\u0001\u0000\u0000\u0000/1\u0005\u0006\u0000\u0000"+
-		"0/\u0001\u0000\u0000\u000014\u0001\u0000\u0000\u000020\u0001\u0000\u0000"+
-		"\u000023\u0001\u0000\u0000\u000035\u0001\u0000\u0000\u000042\u0001\u0000"+
-		"\u0000\u000057\u0005\u0007\u0000\u00006&\u0001\u0000\u0000\u00006)\u0001"+
-		"\u0000\u0000\u00006,\u0001\u0000\u0000\u000062\u0001\u0000\u0000\u0000"+
-		"7\u0007\u0001\u0000\u0000\u00008<\u0005\u0004\u0000\u00009;\u0005\u0006"+
-		"\u0000\u0000:9\u0001\u0000\u0000\u0000;>\u0001\u0000\u0000\u0000<:\u0001"+
-		"\u0000\u0000\u0000<=\u0001\u0000\u0000\u0000=?\u0001\u0000\u0000\u0000"+
-		"><\u0001\u0000\u0000\u0000?@\u0005\u0005\u0000\u0000@\t\u0001\u0000\u0000"+
-		"\u0000AB\u0005\b\u0000\u0000BF\u0005\t\u0000\u0000CD\u0005\b\u0000\u0000"+
-		"DF\u0005\u0000\u0000\u0001EA\u0001\u0000\u0000\u0000EC\u0001\u0000\u0000"+
-		"\u0000F\u000b\u0001\u0000\u0000\u0000\u0007\u0010\u0017#26<E";
+		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
+		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0001"+
+		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0003\u0000\u001d\b\u0000\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0005\u0001\"\b\u0001\n\u0001\f\u0001%"+
+		"\t\u0001\u0001\u0001\u0003\u0001(\b\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0002\u0001\u0002\u0001\u0002\u0005\u0002/\b\u0002\n\u0002\f\u00022\t"+
+		"\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0003\u0003;\b\u0003\u0001\u0004\u0001\u0004\u0001"+
+		"\u0004\u0005\u0004@\b\u0004\n\u0004\f\u0004C\t\u0004\u0001\u0004\u0001"+
+		"\u0004\u0001\u0005\u0001\u0005\u0001\u0006\u0001\u0006\u0001\u0007\u0001"+
+		"\u0007\u0003\u0007M\b\u0007\u0001\b\u0005\bP\b\b\n\b\f\bS\t\b\u0001\b"+
+		"\u0001\b\u0001\t\u0001\t\u0001\t\u0001\t\u0001\n\u0001\n\u0001\u000b\u0001"+
+		"\u000b\u0001\u000b\u0000\u0000\f\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010"+
+		"\u0012\u0014\u0016\u0000\u0001\u0001\u0000\u0004\tZ\u0000\u001c\u0001"+
+		"\u0000\u0000\u0000\u0002\u001e\u0001\u0000\u0000\u0000\u0004+\u0001\u0000"+
+		"\u0000\u0000\u0006:\u0001\u0000\u0000\u0000\b<\u0001\u0000\u0000\u0000"+
+		"\nF\u0001\u0000\u0000\u0000\fH\u0001\u0000\u0000\u0000\u000eL\u0001\u0000"+
+		"\u0000\u0000\u0010Q\u0001\u0000\u0000\u0000\u0012V\u0001\u0000\u0000\u0000"+
+		"\u0014Z\u0001\u0000\u0000\u0000\u0016\\\u0001\u0000\u0000\u0000\u0018"+
+		"\u001d\u0005\u0000\u0000\u0001\u0019\u001a\u0003\u0002\u0001\u0000\u001a"+
+		"\u001b\u0005\u0000\u0000\u0001\u001b\u001d\u0001\u0000\u0000\u0000\u001c"+
+		"\u0018\u0001\u0000\u0000\u0000\u001c\u0019\u0001\u0000\u0000\u0000\u001d"+
+		"\u0001\u0001\u0000\u0000\u0000\u001e\u001f\u0005\u0001\u0000\u0000\u001f"+
+		"#\u0005\n\u0000\u0000 \"\u0003\u000e\u0007\u0000! \u0001\u0000\u0000\u0000"+
+		"\"%\u0001\u0000\u0000\u0000#!\u0001\u0000\u0000\u0000#$\u0001\u0000\u0000"+
+		"\u0000$\'\u0001\u0000\u0000\u0000%#\u0001\u0000\u0000\u0000&(\u0003\u0004"+
+		"\u0002\u0000\'&\u0001\u0000\u0000\u0000\'(\u0001\u0000\u0000\u0000()\u0001"+
+		"\u0000\u0000\u0000)*\u0005\u000b\u0000\u0000*\u0003\u0001\u0000\u0000"+
+		"\u0000+,\u0005\u0002\u0000\u0000,0\u0005\n\u0000\u0000-/\u0003\u0006\u0003"+
+		"\u0000.-\u0001\u0000\u0000\u0000/2\u0001\u0000\u0000\u00000.\u0001\u0000"+
+		"\u0000\u000001\u0001\u0000\u0000\u000013\u0001\u0000\u0000\u000020\u0001"+
+		"\u0000\u0000\u000034\u0005\u000b\u0000\u00004\u0005\u0001\u0000\u0000"+
+		"\u000056\u0003\f\u0006\u000067\u0003\n\u0005\u000078\u0005\u0011\u0000"+
+		"\u00008;\u0001\u0000\u0000\u00009;\u0003\b\u0004\u0000:5\u0001\u0000\u0000"+
+		"\u0000:9\u0001\u0000\u0000\u0000;\u0007\u0001\u0000\u0000\u0000<=\u0005"+
+		"\u0003\u0000\u0000=A\u0005\n\u0000\u0000>@\u0003\u0006\u0003\u0000?>\u0001"+
+		"\u0000\u0000\u0000@C\u0001\u0000\u0000\u0000A?\u0001\u0000\u0000\u0000"+
+		"AB\u0001\u0000\u0000\u0000BD\u0001\u0000\u0000\u0000CA\u0001\u0000\u0000"+
+		"\u0000DE\u0005\u000b\u0000\u0000E\t\u0001\u0000\u0000\u0000FG\u0007\u0000"+
+		"\u0000\u0000G\u000b\u0001\u0000\u0000\u0000HI\u0005\f\u0000\u0000I\r\u0001"+
+		"\u0000\u0000\u0000JM\u0003\u0012\t\u0000KM\u0003\u0010\b\u0000LJ\u0001"+
+		"\u0000\u0000\u0000LK\u0001\u0000\u0000\u0000M\u000f\u0001\u0000\u0000"+
+		"\u0000NP\u0005\u000f\u0000\u0000ON\u0001\u0000\u0000\u0000PS\u0001\u0000"+
+		"\u0000\u0000QO\u0001\u0000\u0000\u0000QR\u0001\u0000\u0000\u0000RT\u0001"+
+		"\u0000\u0000\u0000SQ\u0001\u0000\u0000\u0000TU\u0005\u000e\u0000\u0000"+
+		"U\u0011\u0001\u0000\u0000\u0000VW\u0003\u0014\n\u0000WX\u0005\r\u0000"+
+		"\u0000XY\u0003\u0016\u000b\u0000Y\u0013\u0001\u0000\u0000\u0000Z[\u0005"+
+		"\f\u0000\u0000[\u0015\u0001\u0000\u0000\u0000\\]\u0005\u0011\u0000\u0000"+
+		"]\u0017\u0001\u0000\u0000\u0000\b\u001c#\'0:ALQ";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

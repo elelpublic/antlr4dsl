@@ -1,2 +1,9 @@
+query {
 
-query { }
+    id: Globale Projektliste
+    type: Projekt
+    language: German
+
+}
+
+

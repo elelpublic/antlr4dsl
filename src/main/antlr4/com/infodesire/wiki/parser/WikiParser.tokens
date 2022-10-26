@@ -1,0 +1,4 @@
+WIKI=1
+WHITESPACE=2
+NEWLINE=3
+'wiki'=1

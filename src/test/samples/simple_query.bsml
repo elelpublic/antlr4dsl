@@ -1,0 +1,15 @@
+QUERY {
+
+name:value
+type :Project
+type: Project
+type : Project
+
+name: Spaces are ok too
+
+// empty properties are allowed
+name:
+
+type: spaces are OK even at the end
+
+}

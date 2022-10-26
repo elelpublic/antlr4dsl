@@ -1,0 +1,53 @@
+Ideen für eine Wiki-Syntax inkl. BSML-Funktionen.
+
+Alle aktiven Projekte:
+
+[List=ActiveProjects]
+
+Neues Projekt anlegen:
+
+[Create=NewProject]
+
+---
+
+// im unteren Bereich sind BSML-Aktionen hinterlegt
+// Trennzeichen drei Minuszeichen --- auf einer sonst leeren Zeile
+
+
+query {
+
+    name: ActiveProjects
+    type: Projekt
+    language: German
+
+    where {
+
+        or {
+
+            Status: aktiv
+            Status: Vorleistung
+
+        }
+
+        Oberprojekt: ""
+
+    }
+
+}
+
+
+create {
+
+    name: NewProject
+    type: Project
+    language: internal
+
+    values {
+
+        Description: Dieses Projekt wurde mit Powerwiki und BSML angelegt.
+
+    }
+
+}
+
+

@@ -7,8 +7,16 @@ options {
 }
 
 prog
-    : EOF
-    | query EOF
+    : programLine*
+    ;
+
+programLine
+    : query
+    | action
+    ;
+
+action
+    : ACTION LCURLY RCURLY
     ;
 
 query
@@ -25,14 +33,21 @@ where
     ;
 
 queryExpression
-    : field comparator VALUE
-    | orExpression
+    : field comparator value
+    | booleanExpression
+    | emptyLine
     ;
 
-orExpression
-    : OR LCURLY
+booleanExpression
+    : booleanOperator LCURLY
         queryExpression*
       RCURLY
+    ;
+
+booleanOperator
+    : AND
+    | OR
+    | NOT
     ;
 
 comparator
@@ -42,6 +57,10 @@ comparator
     | NOT_EQUAL
     | GREATER
     | GREATER_OR_EQUAL
+    | STARTS_WITH
+    | ENDS_WITH
+    | LIKE
+    | CONTAINS
     ;
 
 field

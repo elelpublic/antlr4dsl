@@ -30,7 +30,9 @@
     </target>
 
     <target name="fetchlibs" depends="tools.install, setup.ivy">
-        <ivy:retrieve />
+        <ivy:retrieve
+            log="download-only"
+        />
     </target>
 
     <target name="antlr.generate" depends="tools.install">
@@ -79,6 +81,7 @@
                 srcdir="src/main/java"
                 destdir="target/classes"
                 debug="true"
+                includeantruntime="true"
         >
             <src path="src/main/java" />
             <src path="src/main/antlr4" />

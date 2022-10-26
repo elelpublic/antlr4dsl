@@ -1,0 +1,32 @@
+QUERY {
+
+    name: Interne Projekte
+    type: Projekt
+
+    WHERE {
+
+        Bezeichnung = Intern*
+        //Projektende > Projektbeginn + 1 year
+
+        OR {
+            Projektbeginn < 1.1.2023
+            Status = aktiv
+        }
+
+        NOT {
+
+            Status = archiviert
+
+            AND {
+
+                Kunde.Name LIKE "IBM"
+
+            }
+
+        }
+
+    }
+
+}
+
+

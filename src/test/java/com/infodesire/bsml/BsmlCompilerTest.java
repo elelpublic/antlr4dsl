@@ -1,54 +1,57 @@
 package com.infodesire.bsml;
 
-import com.infodesire.bsml.model.Expression;
+import com.infodesire.bsml.model.ProgramLine;
 import com.infodesire.bsml.model.Query;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class BsmlCompilerTest {
-
-  //@Test
-  public void simpleBinaryExpression() throws IOException {
-
-    File file = new File( "src/test/samples/test1.bsml" );
-    BsmlCompiler compiler = new BsmlCompiler();
-
-    Expression expression = (Expression) compiler.compile( file, Charset.forName( "UTF-8" ) );
-
-    assertEquals( Expression.Type.BINARY, expression.getType() );
-    assertEquals( Expression.Type.NUMBER, expression.getLeft().getType() );
-    assertEquals( Expression.Type.NUMBER, expression.getRight().getType() );
-    assertEquals( Expression.Operator.DIV, expression.getOperator() );
-
-    assertEquals( 10, expression.getLeft().getNumber() );
-    assertEquals( 2, expression.getRight().getNumber() );
-
-  }
 
 
   @Test
   public void simpleQuery() throws IOException {
 
-    File file = new File( "src/test/samples/query_properties.bsml" );
+    File file = new File( "src/test/samples/simple_query.bsml" );
     BsmlCompiler compiler = new BsmlCompiler();
 
-    Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );
+    List<ProgramLine> programLines = compiler.compile( file, Charset.forName( "UTF-8" ) );
+
+    assertEquals( 1, programLines.size() );
+    assertTrue( programLines.get( 0 ) instanceof Query );
 
   }
 
 
   @Test
-  public void fullQuery() throws IOException {
+  public void query() throws IOException {
 
     File file = new File( "src/test/samples/query.bsml" );
     BsmlCompiler compiler = new BsmlCompiler();
 
-    Query query = (Query) compiler.compile( file, Charset.forName( "UTF-8" ) );
+    List<ProgramLine> programLines = compiler.compile( file, Charset.forName( "UTF-8" ) );
+
+    assertEquals( 1, programLines.size() );
+    assertTrue( programLines.get( 0 ) instanceof Query );
+
+  }
+
+
+  @Test
+  public void complexQuery() throws IOException {
+
+    File file = new File( "src/test/samples/complex_query.bsml" );
+    BsmlCompiler compiler = new BsmlCompiler();
+
+    List<ProgramLine> programLines = compiler.compile( file, Charset.forName( "UTF-8" ) );
+
+    assertEquals( 1, programLines.size() );
+    assertTrue( programLines.get( 0 ) instanceof Query );
 
   }
 

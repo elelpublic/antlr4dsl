@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.1
+// Generated from /Users/lars/workspaces/main/poc/antlr4dsl/src/main/antlr4/com/infodesire/bsml/parser/BSMLParser.g4 by ANTLR 4.9.2
 package com.infodesire.bsml.parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -17,18 +17,6 @@ public interface BSMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(BSMLParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link BSMLParser#programLine}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitProgramLine(BSMLParser.ProgramLineContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BSMLParser#action}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAction(BSMLParser.ActionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link BSMLParser#query}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -46,24 +34,6 @@ public interface BSMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitQueryExpression(BSMLParser.QueryExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BSMLParser#booleanExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBooleanExpression(BSMLParser.BooleanExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BSMLParser#booleanOperator}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBooleanOperator(BSMLParser.BooleanOperatorContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BSMLParser#comparator}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitComparator(BSMLParser.ComparatorContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BSMLParser#field}.
 	 * @param ctx the parse tree

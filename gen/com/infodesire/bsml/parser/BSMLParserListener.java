@@ -1,4 +1,4 @@
-// Generated from java-escape by ANTLR 4.11.1
+// Generated from /Users/lars/workspaces/main/poc/antlr4dsl/src/main/antlr4/com/infodesire/bsml/parser/BSMLParser.g4 by ANTLR 4.9.2
 package com.infodesire.bsml.parser;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -17,26 +17,6 @@ public interface BSMLParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProg(BSMLParser.ProgContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BSMLParser#programLine}.
-	 * @param ctx the parse tree
-	 */
-	void enterProgramLine(BSMLParser.ProgramLineContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BSMLParser#programLine}.
-	 * @param ctx the parse tree
-	 */
-	void exitProgramLine(BSMLParser.ProgramLineContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BSMLParser#action}.
-	 * @param ctx the parse tree
-	 */
-	void enterAction(BSMLParser.ActionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BSMLParser#action}.
-	 * @param ctx the parse tree
-	 */
-	void exitAction(BSMLParser.ActionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BSMLParser#query}.
 	 * @param ctx the parse tree
@@ -67,36 +47,6 @@ public interface BSMLParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitQueryExpression(BSMLParser.QueryExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BSMLParser#booleanExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterBooleanExpression(BSMLParser.BooleanExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BSMLParser#booleanExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitBooleanExpression(BSMLParser.BooleanExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BSMLParser#booleanOperator}.
-	 * @param ctx the parse tree
-	 */
-	void enterBooleanOperator(BSMLParser.BooleanOperatorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BSMLParser#booleanOperator}.
-	 * @param ctx the parse tree
-	 */
-	void exitBooleanOperator(BSMLParser.BooleanOperatorContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BSMLParser#comparator}.
-	 * @param ctx the parse tree
-	 */
-	void enterComparator(BSMLParser.ComparatorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BSMLParser#comparator}.
-	 * @param ctx the parse tree
-	 */
-	void exitComparator(BSMLParser.ComparatorContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BSMLParser#field}.
 	 * @param ctx the parse tree

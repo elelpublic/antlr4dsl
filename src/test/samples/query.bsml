@@ -1,6 +1,6 @@
-query {
+QUERY {
 
-    id: Globale Projektliste
+    name: Globale Projektliste
     type: Projekt
     language: German
 

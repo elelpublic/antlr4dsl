@@ -1,4 +1,4 @@
-package com.infodesire.bsml;
+package com.infodesire.wiki;
 
 
 import org.antlr.v4.runtime.Lexer;
@@ -10,10 +10,10 @@ import org.antlr.v4.runtime.Recognizer;
  * Exception while parsing Bsml code
  *
  */
-public class BsmlException extends RuntimeException {
+public class WikiException extends RuntimeException {
 
 
-  public BsmlException( Recognizer<?, ?> recognizer, String msg, Object offendingSymbol, int line,
+  public WikiException( Recognizer<?, ?> recognizer, String msg, Object offendingSymbol, int line,
                         int charPositionInLine, RecognitionException ex ) {
 
     super( componentName( recognizer )
@@ -34,11 +34,6 @@ public class BsmlException extends RuntimeException {
     else {
       return recognizer.getClass().getSimpleName();
     }
-  }
-
-
-  public BsmlException( String message ) {
-    super( message );
   }
 
 

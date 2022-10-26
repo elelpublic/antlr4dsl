@@ -11,7 +11,12 @@ public class BsmlVersionException extends RuntimeException{
 
 
   public BsmlVersionException( ParseTree node, Parser parser ) {
-    super( "The compiler is incompatible with the syntax. Unable to process node: " + explain( node, parser )) ;
+    this( node, parser, null );
+  }
+
+  public BsmlVersionException( ParseTree node, Parser parser, String message ) {
+    super( "The compiler is incompatible with the syntax. Unable to process node: " + explain( node, parser )
+      + ( message == null ? "" : "\nMessage: " + message ) ) ;
   }
 
   private static String explain( ParseTree node, Parser parser ) {

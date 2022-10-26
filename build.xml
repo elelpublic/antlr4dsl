@@ -78,6 +78,7 @@
         <javac
                 srcdir="src/main/java"
                 destdir="target/classes"
+                debug="true"
         >
             <src path="src/main/java" />
             <src path="src/main/antlr4" />

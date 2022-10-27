@@ -125,6 +125,18 @@ public class BSMLParserBaseListener implements BSMLParserListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFieldPath(BSMLParser.FieldPathContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFieldPath(BSMLParser.FieldPathContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterField(BSMLParser.FieldContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -168,18 +180,6 @@ public class BSMLParserBaseListener implements BSMLParserListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitQueryProperty(BSMLParser.QueryPropertyContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterName(BSMLParser.NameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitName(BSMLParser.NameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

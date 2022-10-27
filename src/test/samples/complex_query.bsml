@@ -2,6 +2,7 @@ QUERY {
 
     name: Interne Projekte
     type: Projekt
+    language: German
 
     WHERE {
 
@@ -19,7 +20,10 @@ QUERY {
 
             AND {
 
-                Kunde.Name LIKE "IBM"
+                OR {
+                    Kunde.Name LIKE IBM
+                    Kunde.Name STARTS_WITH Über
+                }
 
             }
 

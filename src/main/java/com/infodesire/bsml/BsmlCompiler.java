@@ -3,13 +3,13 @@ package com.infodesire.bsml;
 import com.infodesire.bsml.model.Action;
 import com.infodesire.bsml.model.BooleanOperator;
 import com.infodesire.bsml.model.Comparator;
+import com.infodesire.bsml.model.FieldPath;
 import com.infodesire.bsml.model.ProgramLine;
 import com.infodesire.bsml.model.Query;
 import com.infodesire.bsml.model.QueryExpression;
 import com.infodesire.bsml.model.Where;
 import com.infodesire.bsml.parser.BSMLLexer;
 import com.infodesire.bsml.parser.BSMLParser;
-import static com.infodesire.bsml.parser.BSMLParser.*;
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStream;
@@ -29,6 +29,8 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.infodesire.bsml.parser.BSMLParser.*;
 
 public class BsmlCompiler {
 
@@ -139,13 +141,13 @@ public class BsmlCompiler {
     String name = queryPropertyContext.children.get( 0 ).getText();
     String value = queryPropertyContext.children.get( 2 ).getText();
     if( name.equals( "name" ) ) {
-      query.name = value;
+      query.name = value.trim();
     }
     else if( name.equals( "type" ) ) {
-      query.type = value;
+      query.type = value.trim();
     }
     else if( name.equals( "language" ) ) {
-      query.language = value;
+      query.language = value.trim();
     }
     else {
       throw new BsmlException( "Invalid query property '" + name + "'" );
@@ -180,13 +182,19 @@ public class BsmlCompiler {
     else if( firstChild instanceof EmptyLineContext ) {
       return null;
     }
-    else if( firstChild instanceof FieldContext ) {
-      FieldContext fieldContext = (FieldContext) firstChild;
+    else if( firstChild instanceof FieldPathContext ) {
+      FieldPathContext fieldPathContext = (FieldPathContext) firstChild;
       ComparatorContext comparatorContext = (ComparatorContext) queryExpressionContext.children.get( 1 );
       ValueContext valueContext = (ValueContext) queryExpressionContext.children.get( 2 );
       try {
-        return new QueryExpression( fieldContext.getText(),
-          Comparator.fromToken( comparatorContext.getText()), valueContext.getText() );
+        FieldPath fieldPath = new FieldPath();
+        for( ParseTree pathElement : fieldPathContext.children ) {
+          if( pathElement instanceof FieldContext ) {
+            fieldPath.names.add( pathElement.getText() );
+          }
+        }
+        return new QueryExpression( fieldPath, Comparator.fromToken( comparatorContext.getText()),
+          valueContext.getText().trim() );
       }
       catch( ClassNotFoundException ex ) {
         throw new BsmlVersionException( comparatorContext, parser, ex.getMessage() );

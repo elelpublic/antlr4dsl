@@ -65,6 +65,12 @@ public interface BSMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitComparator(BSMLParser.ComparatorContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link BSMLParser#fieldPath}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFieldPath(BSMLParser.FieldPathContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link BSMLParser#field}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -88,12 +94,6 @@ public interface BSMLParserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitQueryProperty(BSMLParser.QueryPropertyContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link BSMLParser#name}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitName(BSMLParser.NameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link BSMLParser#value}.
 	 * @param ctx the parse tree

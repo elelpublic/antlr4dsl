@@ -5,17 +5,19 @@ import java.util.List;
 
 public class QueryExpression {
 
-  final ExpressionType type;
-  String field;
-  String value;
-  BooleanOperator operator;
-  List<QueryExpression> subExpressions = new ArrayList<>();
+  public final ExpressionType type;
+  public Comparator comparator;
+  public FieldPath fieldPath;
+  public String value;
+  public BooleanOperator operator;
+  public List<QueryExpression> subExpressions = new ArrayList<>();
 
   public static enum ExpressionType { SIMPLE, BOOLEAN };
 
-  public QueryExpression( String field, Comparator comparator, String value ) {
+  public QueryExpression( FieldPath fieldPath, Comparator comparator, String value ) {
     this.type = ExpressionType.SIMPLE;
-    this.field = field;
+    this.fieldPath = fieldPath;
+    this.comparator = comparator;
     this.value = value;
   }
 

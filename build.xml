@@ -85,8 +85,23 @@
         >
             <src path="src/main/java" />
             <src path="src/main/antlr4" />
+            <classpath>
+                <pathelement location="lib/antlr4-runtime-${antlr.version}.jar" />
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile.tests" depends="compile">
+        <mkdir dir="target/test-classes" />
+        <javac
+                srcdir="src/test/java"
+                destdir="target/test-classes"
+                debug="true"
+                includeantruntime="true"
+        >
             <src path="src/test/java" />
             <classpath>
+                <pathelement path="target/classes" />
                 <pathelement location="lib/antlr4-runtime-${antlr.version}.jar" />
             </classpath>
         </javac>
@@ -129,10 +144,26 @@
 
     <target name="test" depends="test.run">
         <fail if="failures" ></fail>
+        <groovy>
+            import java.awt.Desktop;
+            if (Desktop.isDesktopSupported()) {
+            try {
+            Desktop desktop = Desktop.getDesktop();
+            File myFile = new File("target/test-report/report/junit-noframes.html");
+            desktop.open(myFile);
+            }
+            catch (IOException ex) {
+            ex.printStackTrace();
+            }
+            }
+        </groovy>
     </target>
 
+    <target name="test-quietly" depends="test.run">
+        <fail if="failures" ></fail>
+    </target>
 
-    <target name="test.run" depends="compile, setup.groovy">
+    <target name="test.run" depends="compile.tests, setup.groovy">
 
         <!-- default fallback: test all -->
         <property name="test.include" value="**/*Test.class" />
@@ -146,7 +177,8 @@
 
             <classpath>
                 <fileset dir="lib" />
-                <pathelement location="target/classes" />
+                <pathelement path="target/classes" />
+                <pathelement path="target/test-classes" />
             </classpath>
 
             <batchtest
@@ -155,7 +187,7 @@
                     todir="target/test-generated-files"
             >
 
-                <fileset dir="target/classes" >
+                <fileset dir="target/test-classes" >
                     <include name="${test.include}" />
                 </fileset>
 
@@ -172,20 +204,6 @@
             </fileset>
             <report format="noframes" todir="target/test-report/report"/>
         </junitreport>
-
-        <groovy>
-            import java.awt.Desktop;
-            if (Desktop.isDesktopSupported()) {
-                try {
-                    Desktop desktop = Desktop.getDesktop();
-                    File myFile = new File("target/test-report/report/junit-noframes.html");
-                    desktop.open(myFile);
-                }
-                catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-        </groovy>
 
     </target>
 
@@ -205,6 +223,16 @@
 
     <target name="help" depends="usage" />
 
+    <target name="jar" depends="test-quietly" >
+        <jar destfile="target/bsml-compiler-${bsml.version}.jar" >
+            <fileset dir="target/classes"></fileset>
+        </jar>
+    </target>
+
+    <target name="publish.team" depends="jar">
+        <fail>Not implemented yet.</fail>
+    </target>
+
     <target name="usage">
         <echo>
 Proof of concept for a ANTLR4 based scripting DSL
@@ -215,6 +243,8 @@ ant antlr.generate ............ Generate compiler code from grammar using antlr
 ant clean ..................... Delete generated files
 ant clean.all ................. Delete all generated or downloaded files
 ant test ...................... Run unit tests
+ant jar ....................... Create jar
+ant publish.team .............. Publish jar to team repo
 ant hello ..................... Compile and run the hello world program
 
         </echo>

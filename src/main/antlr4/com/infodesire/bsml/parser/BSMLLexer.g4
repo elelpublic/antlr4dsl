@@ -12,7 +12,6 @@ AND: 'AND';
 NOT: 'NOT';
 ACTION: 'ACTION';
 
-
 // query operators
 LESS: '<'  -> pushMode( UNTIL_EOL );
 LESS_OR_EQUAL: '<='  -> pushMode( UNTIL_EOL );
@@ -26,16 +25,16 @@ LIKE: 'LIKE' -> pushMode( UNTIL_EOL );
 CONTAINS: 'CONTAINS' -> pushMode( UNTIL_EOL );
 
 // language elements
-LCURLY
-    : '{'
+LCURLY: '{';
+RCURLY: '}';
+DOT: '.';
+
+FIELD
+    : [a-zA-Z][a-zA-Z0-9]*
     ;
 
-RCURLY
-    : '}'
-    ;
-
-IDENTIFIER
-    : [a-zA-Z][a-zA-Z0-9.]*
+PROPERTY_NAME
+    : [a-zA-Z][a-zA-Z0-9]*
     ;
 
 COLON

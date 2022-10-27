@@ -98,6 +98,16 @@ public interface BSMLParserListener extends ParseTreeListener {
 	 */
 	void exitComparator(BSMLParser.ComparatorContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link BSMLParser#fieldPath}.
+	 * @param ctx the parse tree
+	 */
+	void enterFieldPath(BSMLParser.FieldPathContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link BSMLParser#fieldPath}.
+	 * @param ctx the parse tree
+	 */
+	void exitFieldPath(BSMLParser.FieldPathContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link BSMLParser#field}.
 	 * @param ctx the parse tree
 	 */
@@ -137,16 +147,6 @@ public interface BSMLParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitQueryProperty(BSMLParser.QueryPropertyContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link BSMLParser#name}.
-	 * @param ctx the parse tree
-	 */
-	void enterName(BSMLParser.NameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link BSMLParser#name}.
-	 * @param ctx the parse tree
-	 */
-	void exitName(BSMLParser.NameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link BSMLParser#value}.
 	 * @param ctx the parse tree

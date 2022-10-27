@@ -33,7 +33,7 @@ where
     ;
 
 queryExpression
-    : field comparator value
+    : fieldPath comparator value
     | booleanExpression
     | emptyLine
     ;
@@ -63,8 +63,12 @@ comparator
     | CONTAINS
     ;
 
+fieldPath
+    : field ( DOT field )*
+    ;
+
 field
-    : IDENTIFIER
+    : FIELD
     ;
 
 queryPropertyLine
@@ -77,11 +81,7 @@ emptyLine
     ;
 
 queryProperty
-    : name COLON value
-    ;
-
-name
-    : IDENTIFIER
+    : field COLON value
     ;
 
 value

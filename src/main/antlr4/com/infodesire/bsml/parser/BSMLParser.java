@@ -19,18 +19,20 @@ public class BSMLParser extends Parser {
 	public static final int
 		QUERY=1, WHERE=2, OR=3, AND=4, NOT=5, ACTION=6, LESS=7, LESS_OR_EQUAL=8, 
 		EQUAL=9, NOT_EQUAL=10, GREATER=11, GREATER_OR_EQUAL=12, STARTS_WITH=13, 
-		ENDS_WITH=14, LIKE=15, CONTAINS=16, LCURLY=17, RCURLY=18, IDENTIFIER=19, 
-		COLON=20, NEWLINE=21, WHITESPACE=22, LINE_COMMENT=23, VALUE=24, EOL=25;
+		ENDS_WITH=14, LIKE=15, CONTAINS=16, LCURLY=17, RCURLY=18, DOT=19, FIELD=20, 
+		PROPERTY_NAME=21, COLON=22, NEWLINE=23, WHITESPACE=24, LINE_COMMENT=25, 
+		VALUE=26, EOL=27;
 	public static final int
 		RULE_prog = 0, RULE_programLine = 1, RULE_action = 2, RULE_query = 3, 
 		RULE_where = 4, RULE_queryExpression = 5, RULE_booleanExpression = 6, 
-		RULE_booleanOperator = 7, RULE_comparator = 8, RULE_field = 9, RULE_queryPropertyLine = 10, 
-		RULE_emptyLine = 11, RULE_queryProperty = 12, RULE_name = 13, RULE_value = 14;
+		RULE_booleanOperator = 7, RULE_comparator = 8, RULE_fieldPath = 9, RULE_field = 10, 
+		RULE_queryPropertyLine = 11, RULE_emptyLine = 12, RULE_queryProperty = 13, 
+		RULE_value = 14;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"prog", "programLine", "action", "query", "where", "queryExpression", 
-			"booleanExpression", "booleanOperator", "comparator", "field", "queryPropertyLine", 
-			"emptyLine", "queryProperty", "name", "value"
+			"booleanExpression", "booleanOperator", "comparator", "fieldPath", "field", 
+			"queryPropertyLine", "emptyLine", "queryProperty", "value"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -39,7 +41,7 @@ public class BSMLParser extends Parser {
 		return new String[] {
 			null, "'QUERY'", "'WHERE'", "'OR'", "'AND'", "'NOT'", "'ACTION'", "'<'", 
 			"'<='", "'='", "'!='", "'>'", "'>='", "'STARTS_WITH'", "'ENDS_WITH'", 
-			"'LIKE'", "'CONTAINS'", "'{'", "'}'", null, "':'"
+			"'LIKE'", "'CONTAINS'", "'{'", "'}'", "'.'", null, null, "':'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -47,8 +49,8 @@ public class BSMLParser extends Parser {
 		return new String[] {
 			null, "QUERY", "WHERE", "OR", "AND", "NOT", "ACTION", "LESS", "LESS_OR_EQUAL", 
 			"EQUAL", "NOT_EQUAL", "GREATER", "GREATER_OR_EQUAL", "STARTS_WITH", "ENDS_WITH", 
-			"LIKE", "CONTAINS", "LCURLY", "RCURLY", "IDENTIFIER", "COLON", "NEWLINE", 
-			"WHITESPACE", "LINE_COMMENT", "VALUE", "EOL"
+			"LIKE", "CONTAINS", "LCURLY", "RCURLY", "DOT", "FIELD", "PROPERTY_NAME", 
+			"COLON", "NEWLINE", "WHITESPACE", "LINE_COMMENT", "VALUE", "EOL"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -322,7 +324,7 @@ public class BSMLParser extends Parser {
 			setState(49);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 6815744L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 26214400L) != 0) {
 				{
 				{
 				setState(46);
@@ -402,7 +404,7 @@ public class BSMLParser extends Parser {
 			setState(62);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 6815800L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 26214456L) != 0) {
 				{
 				{
 				setState(59);
@@ -430,8 +432,8 @@ public class BSMLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class QueryExpressionContext extends ParserRuleContext {
-		public FieldContext field() {
-			return getRuleContext(FieldContext.class,0);
+		public FieldPathContext fieldPath() {
+			return getRuleContext(FieldPathContext.class,0);
 		}
 		public ComparatorContext comparator() {
 			return getRuleContext(ComparatorContext.class,0);
@@ -471,11 +473,11 @@ public class BSMLParser extends Parser {
 			setState(73);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case IDENTIFIER:
+			case FIELD:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(67);
-				field();
+				fieldPath();
 				setState(68);
 				comparator();
 				setState(69);
@@ -560,7 +562,7 @@ public class BSMLParser extends Parser {
 			setState(80);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 6815800L) != 0) {
+			while (((_la) & ~0x3f) == 0 && ((1L << _la) & 26214456L) != 0) {
 				{
 				{
 				setState(77);
@@ -702,8 +704,77 @@ public class BSMLParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
+	public static class FieldPathContext extends ParserRuleContext {
+		public List<FieldContext> field() {
+			return getRuleContexts(FieldContext.class);
+		}
+		public FieldContext field(int i) {
+			return getRuleContext(FieldContext.class,i);
+		}
+		public List<TerminalNode> DOT() { return getTokens(BSMLParser.DOT); }
+		public TerminalNode DOT(int i) {
+			return getToken(BSMLParser.DOT, i);
+		}
+		public FieldPathContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_fieldPath; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterFieldPath(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitFieldPath(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitFieldPath(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FieldPathContext fieldPath() throws RecognitionException {
+		FieldPathContext _localctx = new FieldPathContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_fieldPath);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(89);
+			field();
+			setState(94);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==DOT) {
+				{
+				{
+				setState(90);
+				match(DOT);
+				setState(91);
+				field();
+				}
+				}
+				setState(96);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
 	public static class FieldContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(BSMLParser.IDENTIFIER, 0); }
+		public TerminalNode FIELD() { return getToken(BSMLParser.FIELD, 0); }
 		public FieldContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -725,12 +796,12 @@ public class BSMLParser extends Parser {
 
 	public final FieldContext field() throws RecognitionException {
 		FieldContext _localctx = new FieldContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_field);
+		enterRule(_localctx, 20, RULE_field);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89);
-			match(IDENTIFIER);
+			setState(97);
+			match(FIELD);
 			}
 		}
 		catch (RecognitionException re) {
@@ -773,15 +844,15 @@ public class BSMLParser extends Parser {
 
 	public final QueryPropertyLineContext queryPropertyLine() throws RecognitionException {
 		QueryPropertyLineContext _localctx = new QueryPropertyLineContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_queryPropertyLine);
+		enterRule(_localctx, 22, RULE_queryPropertyLine);
 		try {
-			setState(93);
+			setState(101);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case IDENTIFIER:
+			case FIELD:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(91);
+				setState(99);
 				queryProperty();
 				}
 				break;
@@ -789,7 +860,7 @@ public class BSMLParser extends Parser {
 			case WHITESPACE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(92);
+				setState(100);
 				emptyLine();
 				}
 				break;
@@ -836,26 +907,26 @@ public class BSMLParser extends Parser {
 
 	public final EmptyLineContext emptyLine() throws RecognitionException {
 		EmptyLineContext _localctx = new EmptyLineContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_emptyLine);
+		enterRule(_localctx, 24, RULE_emptyLine);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(98);
+			setState(106);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==WHITESPACE) {
 				{
 				{
-				setState(95);
+				setState(103);
 				match(WHITESPACE);
 				}
 				}
-				setState(100);
+				setState(108);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(101);
+			setState(109);
 			match(NEWLINE);
 			}
 		}
@@ -872,8 +943,8 @@ public class BSMLParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class QueryPropertyContext extends ParserRuleContext {
-		public NameContext name() {
-			return getRuleContext(NameContext.class,0);
+		public FieldContext field() {
+			return getRuleContext(FieldContext.class,0);
 		}
 		public TerminalNode COLON() { return getToken(BSMLParser.COLON, 0); }
 		public ValueContext value() {
@@ -900,59 +971,16 @@ public class BSMLParser extends Parser {
 
 	public final QueryPropertyContext queryProperty() throws RecognitionException {
 		QueryPropertyContext _localctx = new QueryPropertyContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_queryProperty);
+		enterRule(_localctx, 26, RULE_queryProperty);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(103);
-			name();
-			setState(104);
+			setState(111);
+			field();
+			setState(112);
 			match(COLON);
-			setState(105);
+			setState(113);
 			value();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class NameContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(BSMLParser.IDENTIFIER, 0); }
-		public NameContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_name; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).enterName(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof BSMLParserListener ) ((BSMLParserListener)listener).exitName(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof BSMLParserVisitor ) return ((BSMLParserVisitor<? extends T>)visitor).visitName(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final NameContext name() throws RecognitionException {
-		NameContext _localctx = new NameContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_name);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(107);
-			match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -994,7 +1022,7 @@ public class BSMLParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(109);
+			setState(115);
 			match(VALUE);
 			}
 		}
@@ -1010,7 +1038,7 @@ public class BSMLParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0019p\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u001bv\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
@@ -1024,52 +1052,54 @@ public class BSMLParser extends Parser {
 		"\u0001\u0005\u0001\u0005\u0003\u0005J\b\u0005\u0001\u0006\u0001\u0006"+
 		"\u0001\u0006\u0005\u0006O\b\u0006\n\u0006\f\u0006R\t\u0006\u0001\u0006"+
 		"\u0001\u0006\u0001\u0007\u0001\u0007\u0001\b\u0001\b\u0001\t\u0001\t\u0001"+
-		"\n\u0001\n\u0003\n^\b\n\u0001\u000b\u0005\u000ba\b\u000b\n\u000b\f\u000b"+
-		"d\t\u000b\u0001\u000b\u0001\u000b\u0001\f\u0001\f\u0001\f\u0001\f\u0001"+
-		"\r\u0001\r\u0001\u000e\u0001\u000e\u0001\u000e\u0000\u0000\u000f\u0000"+
-		"\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u001a\u001c"+
-		"\u0000\u0002\u0001\u0000\u0003\u0005\u0001\u0000\u0007\u0010j\u0000!\u0001"+
-		"\u0000\u0000\u0000\u0002&\u0001\u0000\u0000\u0000\u0004(\u0001\u0000\u0000"+
-		"\u0000\u0006,\u0001\u0000\u0000\u0000\b9\u0001\u0000\u0000\u0000\nI\u0001"+
-		"\u0000\u0000\u0000\fK\u0001\u0000\u0000\u0000\u000eU\u0001\u0000\u0000"+
-		"\u0000\u0010W\u0001\u0000\u0000\u0000\u0012Y\u0001\u0000\u0000\u0000\u0014"+
-		"]\u0001\u0000\u0000\u0000\u0016b\u0001\u0000\u0000\u0000\u0018g\u0001"+
-		"\u0000\u0000\u0000\u001ak\u0001\u0000\u0000\u0000\u001cm\u0001\u0000\u0000"+
-		"\u0000\u001e \u0003\u0002\u0001\u0000\u001f\u001e\u0001\u0000\u0000\u0000"+
-		" #\u0001\u0000\u0000\u0000!\u001f\u0001\u0000\u0000\u0000!\"\u0001\u0000"+
-		"\u0000\u0000\"\u0001\u0001\u0000\u0000\u0000#!\u0001\u0000\u0000\u0000"+
-		"$\'\u0003\u0006\u0003\u0000%\'\u0003\u0004\u0002\u0000&$\u0001\u0000\u0000"+
-		"\u0000&%\u0001\u0000\u0000\u0000\'\u0003\u0001\u0000\u0000\u0000()\u0005"+
-		"\u0006\u0000\u0000)*\u0005\u0011\u0000\u0000*+\u0005\u0012\u0000\u0000"+
-		"+\u0005\u0001\u0000\u0000\u0000,-\u0005\u0001\u0000\u0000-1\u0005\u0011"+
-		"\u0000\u0000.0\u0003\u0014\n\u0000/.\u0001\u0000\u0000\u000003\u0001\u0000"+
-		"\u0000\u00001/\u0001\u0000\u0000\u000012\u0001\u0000\u0000\u000025\u0001"+
-		"\u0000\u0000\u000031\u0001\u0000\u0000\u000046\u0003\b\u0004\u000054\u0001"+
-		"\u0000\u0000\u000056\u0001\u0000\u0000\u000067\u0001\u0000\u0000\u0000"+
-		"78\u0005\u0012\u0000\u00008\u0007\u0001\u0000\u0000\u00009:\u0005\u0002"+
-		"\u0000\u0000:>\u0005\u0011\u0000\u0000;=\u0003\n\u0005\u0000<;\u0001\u0000"+
-		"\u0000\u0000=@\u0001\u0000\u0000\u0000><\u0001\u0000\u0000\u0000>?\u0001"+
-		"\u0000\u0000\u0000?A\u0001\u0000\u0000\u0000@>\u0001\u0000\u0000\u0000"+
-		"AB\u0005\u0012\u0000\u0000B\t\u0001\u0000\u0000\u0000CD\u0003\u0012\t"+
-		"\u0000DE\u0003\u0010\b\u0000EF\u0003\u001c\u000e\u0000FJ\u0001\u0000\u0000"+
-		"\u0000GJ\u0003\f\u0006\u0000HJ\u0003\u0016\u000b\u0000IC\u0001\u0000\u0000"+
-		"\u0000IG\u0001\u0000\u0000\u0000IH\u0001\u0000\u0000\u0000J\u000b\u0001"+
-		"\u0000\u0000\u0000KL\u0003\u000e\u0007\u0000LP\u0005\u0011\u0000\u0000"+
-		"MO\u0003\n\u0005\u0000NM\u0001\u0000\u0000\u0000OR\u0001\u0000\u0000\u0000"+
-		"PN\u0001\u0000\u0000\u0000PQ\u0001\u0000\u0000\u0000QS\u0001\u0000\u0000"+
-		"\u0000RP\u0001\u0000\u0000\u0000ST\u0005\u0012\u0000\u0000T\r\u0001\u0000"+
-		"\u0000\u0000UV\u0007\u0000\u0000\u0000V\u000f\u0001\u0000\u0000\u0000"+
-		"WX\u0007\u0001\u0000\u0000X\u0011\u0001\u0000\u0000\u0000YZ\u0005\u0013"+
-		"\u0000\u0000Z\u0013\u0001\u0000\u0000\u0000[^\u0003\u0018\f\u0000\\^\u0003"+
-		"\u0016\u000b\u0000][\u0001\u0000\u0000\u0000]\\\u0001\u0000\u0000\u0000"+
-		"^\u0015\u0001\u0000\u0000\u0000_a\u0005\u0016\u0000\u0000`_\u0001\u0000"+
-		"\u0000\u0000ad\u0001\u0000\u0000\u0000b`\u0001\u0000\u0000\u0000bc\u0001"+
-		"\u0000\u0000\u0000ce\u0001\u0000\u0000\u0000db\u0001\u0000\u0000\u0000"+
-		"ef\u0005\u0015\u0000\u0000f\u0017\u0001\u0000\u0000\u0000gh\u0003\u001a"+
-		"\r\u0000hi\u0005\u0014\u0000\u0000ij\u0003\u001c\u000e\u0000j\u0019\u0001"+
-		"\u0000\u0000\u0000kl\u0005\u0013\u0000\u0000l\u001b\u0001\u0000\u0000"+
-		"\u0000mn\u0005\u0018\u0000\u0000n\u001d\u0001\u0000\u0000\u0000\t!&15"+
-		">IP]b";
+		"\t\u0005\t]\b\t\n\t\f\t`\t\t\u0001\n\u0001\n\u0001\u000b\u0001\u000b\u0003"+
+		"\u000bf\b\u000b\u0001\f\u0005\fi\b\f\n\f\f\fl\t\f\u0001\f\u0001\f\u0001"+
+		"\r\u0001\r\u0001\r\u0001\r\u0001\u000e\u0001\u000e\u0001\u000e\u0000\u0000"+
+		"\u000f\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018"+
+		"\u001a\u001c\u0000\u0002\u0001\u0000\u0003\u0005\u0001\u0000\u0007\u0010"+
+		"q\u0000!\u0001\u0000\u0000\u0000\u0002&\u0001\u0000\u0000\u0000\u0004"+
+		"(\u0001\u0000\u0000\u0000\u0006,\u0001\u0000\u0000\u0000\b9\u0001\u0000"+
+		"\u0000\u0000\nI\u0001\u0000\u0000\u0000\fK\u0001\u0000\u0000\u0000\u000e"+
+		"U\u0001\u0000\u0000\u0000\u0010W\u0001\u0000\u0000\u0000\u0012Y\u0001"+
+		"\u0000\u0000\u0000\u0014a\u0001\u0000\u0000\u0000\u0016e\u0001\u0000\u0000"+
+		"\u0000\u0018j\u0001\u0000\u0000\u0000\u001ao\u0001\u0000\u0000\u0000\u001c"+
+		"s\u0001\u0000\u0000\u0000\u001e \u0003\u0002\u0001\u0000\u001f\u001e\u0001"+
+		"\u0000\u0000\u0000 #\u0001\u0000\u0000\u0000!\u001f\u0001\u0000\u0000"+
+		"\u0000!\"\u0001\u0000\u0000\u0000\"\u0001\u0001\u0000\u0000\u0000#!\u0001"+
+		"\u0000\u0000\u0000$\'\u0003\u0006\u0003\u0000%\'\u0003\u0004\u0002\u0000"+
+		"&$\u0001\u0000\u0000\u0000&%\u0001\u0000\u0000\u0000\'\u0003\u0001\u0000"+
+		"\u0000\u0000()\u0005\u0006\u0000\u0000)*\u0005\u0011\u0000\u0000*+\u0005"+
+		"\u0012\u0000\u0000+\u0005\u0001\u0000\u0000\u0000,-\u0005\u0001\u0000"+
+		"\u0000-1\u0005\u0011\u0000\u0000.0\u0003\u0016\u000b\u0000/.\u0001\u0000"+
+		"\u0000\u000003\u0001\u0000\u0000\u00001/\u0001\u0000\u0000\u000012\u0001"+
+		"\u0000\u0000\u000025\u0001\u0000\u0000\u000031\u0001\u0000\u0000\u0000"+
+		"46\u0003\b\u0004\u000054\u0001\u0000\u0000\u000056\u0001\u0000\u0000\u0000"+
+		"67\u0001\u0000\u0000\u000078\u0005\u0012\u0000\u00008\u0007\u0001\u0000"+
+		"\u0000\u00009:\u0005\u0002\u0000\u0000:>\u0005\u0011\u0000\u0000;=\u0003"+
+		"\n\u0005\u0000<;\u0001\u0000\u0000\u0000=@\u0001\u0000\u0000\u0000><\u0001"+
+		"\u0000\u0000\u0000>?\u0001\u0000\u0000\u0000?A\u0001\u0000\u0000\u0000"+
+		"@>\u0001\u0000\u0000\u0000AB\u0005\u0012\u0000\u0000B\t\u0001\u0000\u0000"+
+		"\u0000CD\u0003\u0012\t\u0000DE\u0003\u0010\b\u0000EF\u0003\u001c\u000e"+
+		"\u0000FJ\u0001\u0000\u0000\u0000GJ\u0003\f\u0006\u0000HJ\u0003\u0018\f"+
+		"\u0000IC\u0001\u0000\u0000\u0000IG\u0001\u0000\u0000\u0000IH\u0001\u0000"+
+		"\u0000\u0000J\u000b\u0001\u0000\u0000\u0000KL\u0003\u000e\u0007\u0000"+
+		"LP\u0005\u0011\u0000\u0000MO\u0003\n\u0005\u0000NM\u0001\u0000\u0000\u0000"+
+		"OR\u0001\u0000\u0000\u0000PN\u0001\u0000\u0000\u0000PQ\u0001\u0000\u0000"+
+		"\u0000QS\u0001\u0000\u0000\u0000RP\u0001\u0000\u0000\u0000ST\u0005\u0012"+
+		"\u0000\u0000T\r\u0001\u0000\u0000\u0000UV\u0007\u0000\u0000\u0000V\u000f"+
+		"\u0001\u0000\u0000\u0000WX\u0007\u0001\u0000\u0000X\u0011\u0001\u0000"+
+		"\u0000\u0000Y^\u0003\u0014\n\u0000Z[\u0005\u0013\u0000\u0000[]\u0003\u0014"+
+		"\n\u0000\\Z\u0001\u0000\u0000\u0000]`\u0001\u0000\u0000\u0000^\\\u0001"+
+		"\u0000\u0000\u0000^_\u0001\u0000\u0000\u0000_\u0013\u0001\u0000\u0000"+
+		"\u0000`^\u0001\u0000\u0000\u0000ab\u0005\u0014\u0000\u0000b\u0015\u0001"+
+		"\u0000\u0000\u0000cf\u0003\u001a\r\u0000df\u0003\u0018\f\u0000ec\u0001"+
+		"\u0000\u0000\u0000ed\u0001\u0000\u0000\u0000f\u0017\u0001\u0000\u0000"+
+		"\u0000gi\u0005\u0018\u0000\u0000hg\u0001\u0000\u0000\u0000il\u0001\u0000"+
+		"\u0000\u0000jh\u0001\u0000\u0000\u0000jk\u0001\u0000\u0000\u0000km\u0001"+
+		"\u0000\u0000\u0000lj\u0001\u0000\u0000\u0000mn\u0005\u0017\u0000\u0000"+
+		"n\u0019\u0001\u0000\u0000\u0000op\u0003\u0014\n\u0000pq\u0005\u0016\u0000"+
+		"\u0000qr\u0003\u001c\u000e\u0000r\u001b\u0001\u0000\u0000\u0000st\u0005"+
+		"\u001a\u0000\u0000t\u001d\u0001\u0000\u0000\u0000\n!&15>IP^ej";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
